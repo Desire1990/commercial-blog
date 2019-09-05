@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.titre }}{% endblock %}
+
+{% block content %}
+
+<div class="article">
+    <form method="post" action="{% url 'page' page_owner %}" class="pure-form">
+        {% csrf_token %}
+        {{ formulaire_message.as_p }}
+        <input class="pure-button pure-button-primary" type="submit" />
+    </form>
+</div>
+{% for statut in statuts %}
+    <div class="bloc">
+        <div class="article">
+            <div class="titre-article">
+            	<span class="titre">
+                <img src="{{ statut.user.profil.avatar.url }}" height="70px" alt="Mon image" />
+            	{% if statut.message %} 
+                    {{ statut.message.source | default:"visiteur anonyme" }} à 
+                {% endif %}
+                {% if statut.user == user %} moi {% else %} {{statut.user}} {% endif %}
+            	</span> 
+            	, il y'a {{ statut.date|timesince }}
+            </div>
+        	<div class="contenu-article">
+        		{{ statut.contenue }}
+        	</div>     
+            <div class="commentaire">
+                <h3 class="titre-comments">Commentaires</h3>
+                {% for a in comments %}
+                    
+                    {% if a.statut == statut %}
+                        <p><b>{{a.user|default:"visiteur anonyme" }}</b> {{a.commentaire}}</p>
+                        <p>il y'a {{a.date|timesince}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="form-commentaire">
+                <h4>Poster votre propre commentaire</h4>
+                <form method="post" action="{% url 'page' statut.user statut.slug %}" class="pure-form">
+                    {% csrf_token %}
+                    {{ formulaire_comment.as_p }}
+                    <input class="pure-button pure-button-primary" type="submit" value="envoyer" />
+                </form>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

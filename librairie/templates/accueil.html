@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil du blog{% endblock %}
+
+{% block content %}
+	<h1>Les membres de Hogi</h1>
+    <div class="row">
+	   {% if user.is_authenticated %}
+        <div class="column">
+            <a href="{% url 'page' user %}">
+        	<div class="card">
+            	<img src="{{ user.profil.avatar.url }}" height="70px" alt="Mon image" />
+                <p>{{ user.first_name }}</p>
+                <p>{{ user.last_name }}</p>
+            </div>
+            </a>
+        </div>
+            
+        {% endif %}
+
+    	{% for user in users %}
+    	
+            <div class="column">
+                <a href="{% url 'page' user %}">
+            	<div class="card">
+                	<img src="{{ user.profil.avatar.url }}" height="70px" alt="image de {{user}}" />
+                	<p> {{ user.first_name }}</p>
+                	<p> {{ user.last_name }}</p>
+            	</div>
+                </a>
+            </div>
+    	{% endfor %}
+    </div>
+
+{% endblock %}
