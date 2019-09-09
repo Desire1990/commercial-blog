@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} {{ inscription }} {% endblock %}
+
+{% block content %}
+<!-- row 1 -->
+<div class="row">
+    <div class="col">
+        <div class="alert alert-success" role="alert">
+            <h3 style="text-align: center" >Bienvenu à BujaMovies</h3>
+            <hr>
+        </div>
+    </div>
+</div>
+<!-- row 2 -->
+
+<div class="row">
+    <div class="col">
+        <div class="alert alert-success" role="alert">
+            <hr>
+            <h2> <u>S'inscrire</u> </h2>
+            <i style="color: green"> {{ msg }}</i>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form_view_inscr.as_p }}
+                <input type="submit" name = "inscrire" value="Submit" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

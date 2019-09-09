@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'librairie'
+    'librairie',
+    'BujaMovies',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,9 @@ ROOT_URLCONF = 'Hogi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, os.path.join('BujaMovies', 'templates')),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +125,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "/")
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'Movies')
+# Maze iyo ni path jewe nakoresheje mugu stocka ama cover nama trailer,but nayishize muri comment kugira mbanze pime ndabe ko bikora
+# sans problem, en plus iyi ndabe ko na commit yikintu kije muri comment ko igi suporta
