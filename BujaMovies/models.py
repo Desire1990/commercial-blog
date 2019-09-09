@@ -14,8 +14,8 @@ class Films(models.Model):
     resolution  = models.IntegerField ( verbose_name = "Resolution" )
     date        = models.DateTimeField ( default = timezone.now )
     slug        = models.SlugField (unique=True, max_length=100, null = True )
-    cover       = models.ImageField ( upload_to = 'Covers/', null = True, blank = True )
-    film        = models.FileField ( upload_to = 'Videos/', null = True, blank = True )
+    cover       = models.ImageField ( upload_to = 'BujaMovie/Covers/', null = True, blank = True )
+    film        = models.FileField ( upload_to = 'BujaMovie/Videos/', null = True, blank = True )
     prix_telechargement = models.FloatField ( verbose_name = "Prix de Téléchargement", help_text = "BIF", null = False )
 
     def save(self,*args,**kwargs):
