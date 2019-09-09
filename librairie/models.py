@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 class Profil(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL)
-    avatar = models.ImageField(null=True, blank=True, upload_to="hogi/profil")
+    avatar = models.ImageField(null=True, blank=True, upload_to="librairie/profil")
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
@@ -54,11 +54,12 @@ class Livre(models.Model):
     maison = models.CharField(max_length=30, verbose_name="maison d'edition")
     titre = models.CharField(max_length=30, verbose_name="titre du livre")
     categorie = models.ForeignKey("Categorie", null=True, on_delete=models.SET_NULL)
-    cover = models.ImageField(upload_to="hogi/covers")
+    cover = models.ImageField(upload_to="librairie/covers")
     contenue = models.TextField(verbose_name="le contenue du livre")
     annee = models.DateField(default=timezone.now)
     prix = models.IntegerField(verbose_name="prix")
-    version = models.IntegerField(verbose_name="auteur du livre")
+    livre = models.FileField(upload_to="librairie/livres")    
+    version = models.IntegerField(verbose_name="version du livre")
     slug = models.SlugField(unique=True, max_length=30)
 
     def __str__(self):
