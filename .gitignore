@@ -7,9 +7,9 @@
 *.avi
 *.pdf
 *.png
-media/*
-BujaMovies/__pycache__/*
-BujaMovies/migrations/__pycache__/*
-librairie/__pycache__/*
-librairie/migrations/__pycache__/*
-Hogi/__pycache__/*
+media/
+BujaMovies/__pycache__/
+BujaMovies/migrations/__pycache__/
+librairie/__pycache__/
+librairie/migrations/__pycache__/
+Hogi/__pycache__/
