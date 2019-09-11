@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import *
 from .forms import *
 from .models import *
 from django.contrib.auth import authenticate, login, logout, models
@@ -28,42 +28,10 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse(connexion))
 
-def accueil(request):
-    if request.user.is_authenticated:
-        users = models.User.objects.exclude(username=request.user.username)
-    else:
-        users = models.User.objects.all()
+def books(request):
+    books = Livre.objects.all()
     return render(request, "accueil.html", locals())
 
-def page(request, username, slug=None):
-    page_owner = models.User.objects.get(username=username)
-    statuts = Statut.objects.filter(Q(user=page_owner)).order_by("-date")
-    comments = Commentaire.objects.all()
-    if slug!=None : obj_statut = Statut.objects.filter(slug=slug)[0]
-    
-    if request.method == "POST":
-        comment_form = CommentaireForm(request.POST)
-        formulaire_message = MessageForm(request.POST)
-        if comment_form.is_valid():
-            commentaire = comment_form.cleaned_data["commentaire"]
-            user = request.user
-            try:
-                Commentaire(commentaire=commentaire, user=user, statut=obj_statut).save()
-            except ValueError:
-                Commentaire(commentaire=commentaire, statut=obj_statut).save()
-
-        if formulaire_message.is_valid():
-            message = formulaire_message.cleaned_data["contenue"]
-            source = request.user
-            user = models.User.objects.get(username=username)
-            print(message, user, source)
-            if user!=source:
-                try:
-                    Message(user=user, contenue=message, source=source).save()
-                except:
-                    Message(contenue=message, user=user).save()
-            else:
-                Statut(user=user, contenue=message).save()
-    formulaire_comment = CommentaireForm()
-    formulaire_message = MessageForm()
-    return render(request, "lire_article.html", locals())
+def book(request, slug):
+    book = Livre.objects.get(slug=slug)
+    return HttpResponse(str(book))
