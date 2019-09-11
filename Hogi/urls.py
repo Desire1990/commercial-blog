@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('library/', include('librairie.urls')),
     path('movies/', include('BujaMovies.urls')),
+    path('music/', include('music.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
