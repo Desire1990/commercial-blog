@@ -3,6 +3,25 @@ from .models import *
 from .forms import *
 
 # Create your views here.
+def connexion(request):
+    error = False
+    # next = request.GET["next"]
+    if request.method == "POST":
+        form = ConnexionForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect(accueil)
+                # return redirect(next)
+            else:
+                error = True
+    else:
+        form = ConnexionForm()
+
+    return render(request, 'music/login.html', locals())
 
 def musicList_view(request):
 	

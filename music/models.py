@@ -4,6 +4,12 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 
+class Profil(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL, related_name="Admin")
+    avatar = models.ImageField(null=True, blank=True, upload_to="avatars/")
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
 class Music(models.Model):
 	audio = models.FileField(upload_to="audios/")
 	cover = models.ImageField(upload_to="covers/")
