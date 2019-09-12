@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'librairie',
     'BujaMovies',
+    'music',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, os.path.join('BujaMovies', 'templates')),
+            os.path.join(BASE_DIR, os.path.join('music', 'templates')),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -124,7 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'Movies')
 # Maze iyo ni path jewe nakoresheje mugu stocka ama cover nama trailer,but nayishize muri comment kugira mbanze pime ndabe ko bikora
 # sans problem, en plus iyi ndabe ko na commit yikintu kije muri comment ko igi suporta
