@@ -6,13 +6,13 @@ from django.utils.text import slugify
 
 class Profil(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL, related_name="Admin")
-    avatar = models.ImageField(null=True, blank=True, upload_to="avatars/")
+    avatar = models.ImageField(null=True, blank=True, upload_to="music/avatars/")
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
 class Music(models.Model):
-	audio = models.FileField(upload_to="audios/")
-	cover = models.ImageField(upload_to="covers/")
+	audio = models.FileField(upload_to="music/audios/")
+	cover = models.ImageField(upload_to="music/covers/")
 	titre = models.TextField(max_length=1000)
 	auteur = models.TextField(max_length=1000)
 	slug = models.SlugField(max_length=1000)
