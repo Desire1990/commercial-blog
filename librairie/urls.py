@@ -4,6 +4,11 @@ from . import views
 urlpatterns = [
     path('login', views.connexion, name='connexion'),
     path('logout', views.deconnexion, name='deconnexion'),
-    path('books', views.books, name='books'), 
+    path('books/<page>', views.books, name='books'), 
+    path('books_by_auteur/<auteur>/<page>', views.books_by_auteur, name='bbaut'), 
+    path('books_by_maison/<maison>/<page>', views.books_by_maison, name='bbmais'), 
+    path('books_by_categorie/<categorie>/<page>', views.books_by_categorie, name='bbcat'), 
+    path('books_by_annee/<annee>/<page>', views.books_by_annee, name='bban'), 
+    path('', views.books, name=''), 
     path('book/<slug>', views.book, name='book'), 
 ]
