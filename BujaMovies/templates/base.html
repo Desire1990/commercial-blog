@@ -36,9 +36,21 @@
             <li class="nav-item">
             <a class="nav-link" href="{% url 'contact_app' %}">Contact</a>
             </li>
+            {% if user.is_authenticated %}
+              {% if user.username == "AdminHogi" %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'ajout_app' %}">Ajouter</a>
+                </li>
+              {%  else %}
+                <li class="nav-item">
+                <a class="nav-link" href="">{{ request.user }}</a>
+                </li>
+              {%  endif %}
+            {% else %}
             <li class="nav-item">
-            <a class="nav-link" href="{% url 'ajout_app' %}">Ajouter</a>
+            <a class="nav-link" href="{% url 'ajout_app' %}">Se connecter</a>
             </li>
+            {% endif %}
         </ul>
         </div>
     </div>
