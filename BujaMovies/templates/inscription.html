@@ -15,18 +15,24 @@
 <!-- row 2 -->
 
 <div class="row">
+    <div class="col"></div>
     <div class="col">
         <div class="alert alert-success" role="alert">
             <hr>
-            <h2> <u>S'inscrire</u> </h2>
+            <h2> <u>S'inscrire</u> </h2><br>
             <i style="color: green"> {{ msg }}</i>
             <form action="" method="POST">
-                {% csrf_token %}
-                {{ form_view_inscr.as_p }}
-                <input type="submit" name = "inscrire" value="Submit" class="btn btn-primary"/>
+                    <div class="form-group">
+                        {% csrf_token %}
+                        {{ form_view_inscr.as_p }}
+                        <input type="submit" name = "inscrire" value="Créer Maintenant" class="btn btn-outline-primary btn-sm btn-block"/>
+                        <br> <a href="{% url 'connexion' %}">S'inscrire</a>
+                    </div>
+                
             </form>
         </div>
     </div>
+    <div class="col"></div>
 </div>
 
 {% endblock %}
