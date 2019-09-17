@@ -53,8 +53,7 @@ body {
 
 @media (max-width: 300px) {
   body {
-    background-color: red;
-    background-image: image-url("http://placekitten.com/g/200/300");
+
   }
   #cover_detail {
     width: 100%;
@@ -63,8 +62,7 @@ body {
 }
 @media (min-width: 301px) and (max-width: 600px) {
   body {
-    background-color: blue;
-    background-image: image-url("http://placekitten.com/g/400/600");
+
   }
   #cover_detail {
     width: 100%;
@@ -89,8 +87,7 @@ body {
 }
 @media (min-width: 601px) and (max-width: 768px) {
   body {
-    background-color: yellow;
-    background-image: image-url("http://placekitten.com/g/500/768");
+
   }
   #cover_detail {
     width: 100%;
