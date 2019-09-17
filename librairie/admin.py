@@ -17,6 +17,11 @@ class AviAdmin(admin.ModelAdmin):
     list_filter = ('livre', 'user', 'like')
     search_fields = ('livre', 'user', 'like')
 
+class AuteurAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'prenom', 'wiki')
+    list_filter = ('nom', 'prenom', 'wiki')
+    search_fields = ('nom', 'prenom', 'wiki')
+
 class ProfilAdmin(admin.ModelAdmin):
     list_display = ('user', 'avatar')
     list_filter = ('user', 'avatar')
@@ -37,5 +42,6 @@ admin.site.register(Livre, LivreAdmin)
 admin.site.register(Avi, AviAdmin)
 admin.site.register(Profil, ProfilAdmin)
 admin.site.register(Client, ClientAdmin)
+admin.site.register(Auteur, AuteurAdmin)
 admin.site.register(Achat, AchatAdmin)
 admin.site.register(Categorie)

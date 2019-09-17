@@ -48,9 +48,17 @@ class Avi(models.Model):
     user = models.ForeignKey("Profil", null=True, on_delete=models.SET_NULL)
     livre = models.ForeignKey("Livre", on_delete=models.CASCADE)
     like = models.BooleanField(null=True)
+
+class Auteur(models.Model):
+    nom = models.CharField(max_length=30)
+    prenom = models.CharField(max_length=30)
+    wiki = models.TextField()
+
+    def __str__(self):
+        return f"{self.nom} {self.prenom}"
     
 class Livre(models.Model):
-    auteur = models.CharField(max_length=30, verbose_name="auteur du livre")
+    auteur = models.ForeignKey("Auteur", null=True, verbose_name="auteur du livre", on_delete=models.SET_NULL)
     maison = models.CharField(max_length=30, verbose_name="maison d'edition")
     titre = models.CharField(max_length=30, verbose_name="titre du livre")
     categorie = models.ForeignKey("Categorie", null=True, on_delete=models.SET_NULL)

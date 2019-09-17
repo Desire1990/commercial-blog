@@ -1,35 +1,104 @@
-{% extends "base.html" %}
+{% extends "baselib.html" %}
+{% block header %}
+  <header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
 
-{% block title %}Accueil du blog{% endblock %}
+        <div class="carousel-item active" style="background-image: url({{ slide1.cover.url }})">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>{{ slide1.titre }}</h3>
+            <p> {{ slide1.contenue|truncatewords:10 }} </p>
+          </div>
+        </div>
+
+        {% for slide in slides %}
+        <div class="carousel-item" style="background-image: url({{ slide.cover.url }})">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>{{ slide.titre }}</h3>
+            <p> {{ slide.contenue|truncatewords:10 }} </p>
+          </div>
+        </div>
+
+      {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </header> 
+{% endblock header %}
 
 {% block content %}
-	<h1>Les membres de Hogi</h1>
-    <div class="row">
-	   {% if user.is_authenticated %}
-        <div class="column">
-            <a href="{% url 'page' user %}">
-        	<div class="card">
-            	<img src="{{ user.profil.avatar.url }}" height="70px" alt="Mon image" />
-                <p>{{ user.first_name }}</p>
-                <p>{{ user.last_name }}</p>
-            </div>
-            </a>
-        </div>
-            
-        {% endif %}
+<h1 class="mt-4 mb-3">Bienvenue dans
+      <small>Votre librairie</small>
+    </h1>
 
-    	{% for user in users %}
-    	
-            <div class="column">
-                <a href="{% url 'page' user %}">
-            	<div class="card">
-                	<img src="{{ user.profil.avatar.url }}" height="70px" alt="image de {{user}}" />
-                	<p> {{ user.first_name }}</p>
-                	<p> {{ user.last_name }}</p>
-            	</div>
-                </a>
-            </div>
-    	{% endfor %}
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url "" %}">Acceuil</a>
+      </li>
+      <li class="breadcrumb-item active">tous nos livres</li>
+    </ol>
+    <div class="row">
+
+    {% for book in page_content %}
+      <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+          <a href="#"><img class="card-img-top" src="{{ book.cover.url }}" alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{% url 'book' book.slug %}">{{ book.titre }}</a>
+            </h4>
+            <p class="card-text">{{ book.contenue|truncatewords:10 }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
     </div>
 
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center">
+    {% if page_content.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+    {% endif %}
+    {% for p in pagination %}
+      <li class="page-item">
+        <a class="page-link" href="#">{{ p }}</a>
+      </li>
+    {% endfor %}
+
+    {% if page_content.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    {% endif %}
+    </ul>
+
+<!-- Call to Action Section -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <p>Description de chaque application pour plus d'inforamtion à donner les utilisateurs.</p>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-lg btn-secondary btn-block" href="#">Retour vers le haut</a>
+      </div>
+    </div>
 {% endblock %}
