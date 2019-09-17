@@ -9,7 +9,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" >
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/modern-business.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/modern-business.css' %}" rel="stylesheet">
     <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{% static 'vendor/jquery/jquery.js' %}"></script>
@@ -36,9 +36,26 @@
             <li class="nav-item">
             <a class="nav-link" href="{% url 'contact_app' %}">Contact</a>
             </li>
+            {% if user.is_authenticated %}
+              {% if user.username == "AdminHogi" %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'ajout_app' %}">Ajouter</a>
+                </li>
+              {%  else %}
+
+                <li class="nav-item">
+                <a class="nav-link" >{{ request.user }}</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'deconnexion' %}" >Deconnexion</a>
+                </li>
+                
+              {%  endif %}
+            {% else %}
             <li class="nav-item">
-            <a class="nav-link" href="{% url 'ajout_app' %}">Ajouter</a>
+            <a class="nav-link" href="{% url 'connexion' %}">Se connecter</a>
             </li>
+            {% endif %}
         </ul>
         </div>
     </div>

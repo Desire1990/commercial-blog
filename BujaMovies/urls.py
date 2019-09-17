@@ -6,6 +6,7 @@ urlpatterns = [
     # path( 'profil/<str:slug>', views.profil_view, name="profil" ),
     path( 'inscription/', views.inscription_view, name="inscription" ),
     path( 'connexion/', views.connexion_view, name="connexion" ),
+    path( 'deconnexion/', views.deconnexion_view, name="deconnexion" ),
 
     # nouveaux url
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path( 'details_app/<str:slug>', views.details_app, name="details_app" ),
     path( 'contact_app/', views.contact_app, name="contact_app" ),
     path( 'ajout_app/', views.ajout_app, name="ajout_app" ),
+
 ]
