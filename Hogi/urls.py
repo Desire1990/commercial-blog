@@ -20,8 +20,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('library/', include('librairie.urls')),
-    path('movies/', include('BujaMovies.urls')),
+    path('library/', include('librairie.urls'),  name='library'),
+    path('movies/', include('BujaMovies.urls'), name="movies"),
     path('', include('base.urls')),
-    path('music/', include('music.urls')),
+    path('music/', include('music.urls'), name="music"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
