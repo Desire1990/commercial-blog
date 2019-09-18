@@ -9,7 +9,10 @@
 *.png
 media/
 BujaMovies/__pycache__/
-BujaMovies/migrations/__pycache__/
+BujaMovies/migrations/
 librairie/__pycache__/
-librairie/migrations/__pycache__/
+librairie/migrations/
 Hogi/__pycache__/
+db.sqlite3
+music/migrations/
+music/__pycache__/
