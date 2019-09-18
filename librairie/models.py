@@ -25,6 +25,9 @@ class Commentaire(models.Model):
 class Categorie(models.Model):
     categorie = models.CharField(max_length=30)
 
+    def __str__(self):
+        return f"{self.categorie}"
+
 class Client(models.Model):
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)

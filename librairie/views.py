@@ -29,54 +29,53 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse(connexion))
 
-def books(request, page=1):
-    books = Livre.objects.all()
+def book_attrs(books, page):
     slide1 = books[0]
     slides = books[1:3]
     pages = Paginator(books, 20, orphans=8)
     page_content = pages.page(page)
-    pagination = [x for x in range(1, pages.num_pages)]
-    return render(request, "accueil.html", locals())
+    pagination = pages.page_range
+    return (slide1, slides, pages, page_content, pagination)
+
+def books(request, page=1):
+    books = Livre.objects.all()
+    accueil = True
+    slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    return render(request, "library/accueil.html", locals())
 
 def books_by_auteur(request, auteur, page):
     books = Livre.objects.filter(id=auteur)
-    slide1 = books[0]
-    slides = books[1:3]
-    pages = Paginator(books, 20, orphans=8)
-    page_content = pages.page(page)
-    pagination = [x for x in range(1, pages.num_pages)]
-    return render(request, "accueil.html", locals())
+    accueil = False
+    slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    return render(request, "library/accueil.html", locals())
     
 def books_by_maison(request, maison, page):
     books = Livre.objects.filter(maison = maison)
-    slide1 = books[0]
-    slides = books[1:3]
-    pages = Paginator(books, 20, orphans=8)
-    page_content = pages.page(page)
-    pagination = [x for x in range(1, pages.num_pages)]
-    return render(request, "accueil.html", locals())
+    accueil = False
+    slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    return render(request, "library/accueil.html", locals())
     
 def books_by_categorie(request, categorie, page):
     categorie = Categorie.objects.get(categorie=categorie)
     books = Livre.objects.filter(categorie=categorie)
-    slide1 = books[0]
-    slides = books[1:3]
-    pages = Paginator(books, 20, orphans=8)
-    page_content = pages.page(page)
-    pagination = [x for x in range(1, pages.num_pages)]
-    return render(request, "accueil.html", locals())
+    accueil = False
+    slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    return render(request, "library/accueil.html", locals())
     
 def books_by_annee(request, annee, page):
     books = Livre.objects.filter(annee=annee)
-    slide1 = books[0]
-    slides = books[1:3]
-    pages = Paginator(books, 20, orphans=8)
-    page_content = pages.page(page)
-    pagination = [x for x in range(1, pages.num_pages)]
-    return render(request, "accueil.html", locals())
+    accueil = False
+    slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    return render(request, "library/accueil.html", locals())
 
 def book(request, slug):
     book = Livre.objects.get(slug=slug)
     lasts = Livre.objects.filter(auteur=book.auteur)[:3]
-    return render(request, "detail.html", locals())
-    
+    return render(request, "library/detail.html", locals())
+
+def ajouter(request, slug):
+    pass
+def modifier(request, slug):
+    pass
+def supprimer(request, slug):
+    pass
