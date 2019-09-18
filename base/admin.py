@@ -11,3 +11,6 @@ class SlidesAdmin(admin.ModelAdmin):
 admin.site.register(Slides, SlidesAdmin)
 
 # Register your models here.
+
+admin.site.register( Contact )
+admin.site.register( Personnel )

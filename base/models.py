@@ -11,7 +11,7 @@ class Contact(models.Model):
 	email = models.EmailField(max_length=64, verbose_name="Email Address")
 	message = models.TextField( verbose_name="Message")
 
-	def __str_(self):
+	def __str__(self):
 		return f"{self.name} : {self.message[:20]}..."
 
 
@@ -19,5 +19,5 @@ class Slides(models.Model):
 	slide = models.ImageField(upload_to="base/slides/")
 	about = models.CharField(max_length=1000)
 
-	def __str_(self):
+	def __str__(self):
 		return f"{self.about}"
