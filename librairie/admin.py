@@ -7,7 +7,7 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('livre', 'commentaire', 'date', 'user', 'visible')
 
 class LivreAdmin(admin.ModelAdmin):
-    list_display = ('auteur', 'maison', 'titre', 'categorie', 'cover', 'contenue', 'annee', 'prix', 'version')
+    list_display = ('auteur', 'maison', 'titre', 'categorie', 'cover', 'annee', 'prix', 'version')
     list_filter = list_display
     search_fields = list_display
     prepopulated_fields = {'slug': ('titre', )}

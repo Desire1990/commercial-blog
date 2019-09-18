@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'librairie',
     'BujaMovies',
     'music',
+    'base'
 ]
 
 MIDDLEWARE = [
@@ -58,8 +59,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, os.path.join('BujaMovies', 'templates')),
+            os.path.join(BASE_DIR, os.path.join('base', 'templates')),
             os.path.join(BASE_DIR, os.path.join('music', 'templates')),
+            os.path.join(BASE_DIR, os.path.join('BujaMovies', 'templates')),
+            os.path.join(BASE_DIR, os.path.join('librairie', 'templates')),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

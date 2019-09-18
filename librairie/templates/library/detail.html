@@ -1,0 +1,122 @@
+{% extends "library/base.html" %}
+
+{% block content %}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">
+      <small>Details {{ book.titre }} </small>
+    </h1>
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{% url "books" 1 %}">Home</a>
+      </li>
+      <li class="breadcrumb-item active">{{ book.titre }}</li>
+    </ol>
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+      <div class="col-lg-3 col-md-4 col-sm-12">
+        <img class="img-fluid" src="{{ book.cover.url }}" alt="">
+      </div>
+
+      <div class="col-lg-6 col-md-8 col-sm-12">
+        <h3 class="my-3">Book Description</h3>
+        <p>{{ book.contenue }}</p>
+        <h3 class="my-3">Project Details</h3>
+        <ul>
+          <li><a href="{% url "bbaut" book.auteur.id 1 %}">{{ book.auteur }}</a></li>
+          <li><a href="{% url "bbmais" book.maison 1 %}">{{ book.maison }}</a></li>
+          <li><a href="{% url "bbcat" book.categorie.categorie 1 %}">{{ book.categorie.categorie }}</a></li>
+          <li><a href="{% url "bban" book.annee 1 %}">{{ book.annee }}</a></li>
+          <li>{{ book.version }}</li>
+        </ul>
+        <!-- Scripts for likes -->
+        <h3 class="my-3">Votre avis</h3>
+        <table>
+            <tr>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Form for likes -->
+                    <form action="" id="like_dislike" name="theForm" method="POST">
+                        <!-- {% csrf_token %} -->
+                        <!-- <button onclick="document.getElementById('like_dislike').submit();">like {{ form_view_avi.likes }}</button>
+                        <button onclick="document.getElementById('like_dislike').submit();">dislike {{ form_view_avi.dislikes }}</button>  -->
+                        <button class="btn btn-sm" type="submit" onclick="theForm()">
+                            <!-- {{ form_view_avi.likes }} -->
+                            <input aria-describedby="inputGroup-sizing-sm"  style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
+                                    class="form-control"
+                                    type="submit"
+                                    name="likes"
+                                    value="Like">
+                        </button>
+                        <button class="btn btn-sm" type="submit" onclick="theForm()">
+                            <!-- {{ form_view_avi.dislikes }} -->
+                            <input  style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
+                                    class="form-control"
+                                    type="submit"
+                                    name="dislikes"
+                                    value="Dislike">
+                        </button>
+                    </form>
+                    <!-- Scripts for likes -->
+                    <script>
+                        function theForm(){
+                            document.theForm.submit();
+                        }
+                    </script>
+
+                </td>
+            </tr>
+        </table>
+      </div>
+
+      <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card h-60">
+          <h3 class="card-header">Premium</h3>
+          <div class="card-body">
+            <div class="display-5">{{ book.prix }} Fbu</div>
+            <div class="font-italic">per month</div>
+            <div>la version d'essaie est possible seulement pour les utilisateur connéctés</div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">30 pages pour l'essaie</li>
+            <li class="list-group-item">
+            <button id="essaie" class="btn btn-danger">Essaie</button>
+            <button id="telecharger" class="btn btn-success">Telecharger</button>
+            <button id="acheter" class="btn btn-success">acheter</button>
+            <button  id="valider" type="submit" name ="checkcode" class="btn btn-success">valider</button>
+            <br>
+            <input style ="margin-top: 5px;" id="inputid" required type="text" placeholder="Numéro de comfirmation"/><br>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+    
+    <h3 class="my-4">Recherches associées:
+      <h4><small>Ses nouveautés</small></h4>
+    </h3>
+
+
+    <div class="row">
+      {% for book in lasts %}
+        <div class="col-md-2 col-sm-4 mb-4">
+          <a href="{% url 'book' book.slug %}">
+            <img class="img-fluid" src="{{ book.cover.url }}" alt="">
+          </a>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+{% endblock %}

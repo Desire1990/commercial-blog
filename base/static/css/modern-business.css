@@ -1,0 +1,102 @@
+/*!
+ * Start Bootstrap - Modern Business (https://startbootstrap.com/template-overviews/modern-business)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+/* .fa {
+  padding: 10px;
+  font-size: 50px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+  opacity: 0.4;
+}
+
+.fa-facebook {
+  color: #3B5998;
+}
+
+.fa-twitter {
+  color: #55ACEE;
+}
+
+.fa-youtube {
+  color: #bb0000;
+}
+
+.fa-instagram {
+  color: #f40083;
+} */
+
+
+@media (max-width: 300px) {
+  body {
+
+  }
+  #cover_detail {
+    width: 100%;
+    height: 300px;
+  }
+}
+@media (min-width: 301px) and (max-width: 600px) {
+  body {
+
+  }
+  #cover_detail {
+    width: 100%;
+    height: 350px;
+  }
+  #buja{
+    font-size: 24px;
+  }
+  #img{
+    width: : 100px;
+    height: 150px;
+  }
+  #acteur_sm{
+    display: none;
+  }
+  #titre_sm{
+    font-size: 10px;
+  }
+  .card-body{
+  height: 50px;
+  }
+}
+@media (min-width: 601px) and (max-width: 768px) {
+  body {
+
+  }
+  #cover_detail {
+    width: 100%;
+    height: 350px;
+  }
+}
+@media (min-width: 769px) {
+  #cover_detail {
+    width: 200px;
+    height: 270px;
+  }
+}
