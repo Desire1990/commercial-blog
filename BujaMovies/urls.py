@@ -10,7 +10,7 @@ urlpatterns = [
 
     # nouveaux url
 
-    path( '', views.acceuil_app, name="acceuil_app" ),
+    path( '', views.acceuil_app, name="movies" ),
     path( 'apropos_app/', views.apropos_app, name="apropos_app" ),
     path( 'details_app/<str:slug>', views.details_app, name="details_app" ),
     path( 'contact_app/', views.contact_app, name="contact_app" ),

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 from django.contrib.auth import logout
 from django.http import HttpResponse
 from .models import *
@@ -15,7 +16,10 @@ def deconnexion(request):
 	return HttpResponse("<h1>deconnexion</h1>")
 
 def index(request):
-	return HttpResponse("<h1>index</h1>")
+	slides = Slides.objects.all()
+	slide1 = slides[0]
+	slides = slides[1:3]
+	return render(request, 'index.html', locals())
 
 def contact(request):
 	form = ContactForm(request.POST or None)

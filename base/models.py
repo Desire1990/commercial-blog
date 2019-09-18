@@ -13,3 +13,11 @@ class Contact(models.Model):
 
 	def __str__(self):
 		return f"{self.name} : {self.message[:20]}..."
+
+
+class Slides(models.Model):
+	slide = models.ImageField(upload_to="base/slides/")
+	about = models.CharField(max_length=1000)
+
+	def __str__(self):
+		return f"{self.about}"
