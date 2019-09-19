@@ -2,7 +2,9 @@ from django.shortcuts import render
 
 from django.contrib.auth import logout
 from django.http import HttpResponse
-from .models import *
+from BujaMovies.models import Film
+from librairie.models import Livre
+from music.models import Music
 from .forms import *
 
 def inscription(request):
@@ -16,9 +18,9 @@ def deconnexion(request):
 	return HttpResponse("<h1>deconnexion</h1>")
 
 def index(request):
-	slides = Slides.objects.all()
-	slide1 = slides[0]
-	slides = slides[1:3]
+	slide1 = Music.objects.last()
+	slide2 = Films.objects.last()
+	slide3 = Livre.objects.last()
 	return render(request, 'index.html', locals())
 
 def contact(request):

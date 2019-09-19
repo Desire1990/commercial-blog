@@ -7,25 +7,15 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('livre', 'commentaire', 'date', 'user', 'visible')
 
 class LivreAdmin(admin.ModelAdmin):
-    list_display = ('auteur', 'maison', 'titre', 'categorie', 'cover', 'annee', 'prix', 'version')
-    list_filter = list_display
-    search_fields = list_display
+    list_display = ('owner', 'maison', 'titre', 'categorie', 'cover', 'annee', 'prix', 'version')
+    list_filter = ('owner', 'maison', 'titre', 'categorie', 'cover', 'annee', 'prix', 'version')
+    search_fields = ('owner', 'maison', 'titre', 'categorie', 'cover', 'annee', 'prix', 'version')
     prepopulated_fields = {'slug': ('titre', )}
 
 class AviAdmin(admin.ModelAdmin):
     list_display = ('livre', 'user', 'like')
     list_filter = ('livre', 'user', 'like')
     search_fields = ('livre', 'user', 'like')
-
-class AuteurAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'prenom', 'wiki')
-    list_filter = ('nom', 'prenom', 'wiki')
-    search_fields = ('nom', 'prenom', 'wiki')
-
-class ProfilAdmin(admin.ModelAdmin):
-    list_display = ('user', 'avatar')
-    list_filter = ('user', 'avatar')
-    search_fields = ('user', 'avatar')
     
 class ClientAdmin(admin.ModelAdmin):
     list_display = ("nom", "prenom", 'tel')
@@ -40,8 +30,7 @@ class AchatAdmin(admin.ModelAdmin):
 admin.site.register(Commentaire, CommentAdmin)
 admin.site.register(Livre, LivreAdmin)
 admin.site.register(Avi, AviAdmin)
-admin.site.register(Profil, ProfilAdmin)
 admin.site.register(Client, ClientAdmin)
-admin.site.register(Auteur, AuteurAdmin)
 admin.site.register(Achat, AchatAdmin)
 admin.site.register(Categorie)
+admin.site.register(Contribution)

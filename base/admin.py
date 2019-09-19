@@ -7,6 +7,10 @@ class SlidesAdmin(admin.ModelAdmin):
     ordering = ('slide', 'about',)
     search_field = ('slide', 'about',)
 
+class ProfilAdmin(admin.ModelAdmin):
+    list_display = ('user', 'avatar', 'about')
+    list_filter = ('user', 'avatar', 'about')
+    search_fields = ('user', 'avatar', 'about')
 
 admin.site.register(Slides, SlidesAdmin)
 
@@ -14,3 +18,4 @@ admin.site.register(Slides, SlidesAdmin)
 
 admin.site.register( Contact )
 admin.site.register( Personnel )
+admin.site.register( Profil, ProfilAdmin )

@@ -1,6 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Profil(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    avatar = models.ImageField(null=True, blank=True, upload_to="movies/avatars/")
+    about = models.TextField(max_length=1000)
+    
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
 class Personnel(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	photo = models.ImageField(upload_to="")

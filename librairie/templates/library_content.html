@@ -1,0 +1,34 @@
+{% extends "home.html" %}
+{% block app_content %}
+<h1 id="buja" class="mt-4 mb-3">
+  <small>Bienvenue dans l'espace pour</small>
+  {{ nom_app }}
+  <!-- <p id="ok">OK</p> -->
+</h1>
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'library' %}">{{ nom_app }}</a>
+  </li>
+  <li class="breadcrumb-item active">Acceuil</li>
+</ol>
+
+    <!-- Elements Content -->
+    <div class="row">
+      {% for element in page_content %}
+      <div class="col-lg-2 col-md-3 col-sm-4 col-6 detail_element">
+        <div class="card h-100">
+          <a href="#"><img id="img" class="card-img-top" src="{{ element.cover.url }}" alt="{{ element.titre }}" height="200px"></a>
+          <div class="card-body">
+            <h6 class="card-title">
+              <a id="titre_sm" href="{% url 'book' element.slug %}">{{ element.titre }}</a>
+            </h6>
+            <p id="acteur_sm" class="card-text"> <font size="1">{{ element.owner }}</font> </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div><hr>
+
+<br>
+{% endblock app_content %}
