@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import *
-from .models import Films, Avis, Commentaires, Achats
+from .models import *
 from django.db.models import Q
-from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -53,39 +52,25 @@ def deconnexion_view(request):
     logout(request)
     return redirect(acceuil_app)
 
-def acceuil_app(request):
-    acceuil = "Page d'acceuil"
-    film_obj = Films.objects.all().order_by('date')
-    page = request.GET.get('page', 1)          # page à charger par defaut
-    paginator = Paginator(film_obj, 8)         # limiter tous les elements à afficher
-
+def movies_attrs(movies, page):
     try:
-        filmsPage = paginator.page(page)
-    except PageNotAnInteger:
-        filmsPage = paginator.page(1)
-    except EmptyPage:
-        filmsPage = paginator.page(paginator.num_pages)
+        slide1 = movies[0]
+        slides = movies[1:3]
+    except IndexError:
+        slide1 = None
+        slides = None
+    pages = Paginator(movies, 20, orphans=8)
+    page_content = pages.page(page)
+    pagination = pages.page_range
+    nom_app = "Films"
+    return (nom_app, slide1, slides, pages, page_content, pagination)
 
-    nombre_film = Films.objects.all().count()
-    form_view_film = FilmForm(request.POST or None, request.FILES)
-    if request.method == "POST":
-        if form_view_film.is_valid():
-            # form_view_film.save()
-            currentuser = request.user
-            titre = form_view_film.cleaned_data['titre']
-            acteur = form_view_film.cleaned_data['acteur']
-            description = form_view_film.cleaned_data['description']
-            language = form_view_film.cleaned_data['language']
-            resolution = form_view_film.cleaned_data['resolution']
-            cover = form_view_film.cleaned_data['cover']
-            film = form_view_film.cleaned_data['film']
-            prix = form_view_film.cleaned_data['prix_telechargement']
 
-            Films(user = currentuser,titre = titre,acteur = acteur,description = description,language = language,resolution = resolution,cover = cover,film = film,prix_telechargement = prix ).save()
-            nombre_film = Films.objects.all().count()
-            msg = "Enregistrer avec success !!!"
-
-    return render(request, 'home.html', locals() )
+def acceuil_app(request):
+    accueil = True
+    movies = Films.objects.all().order_by('date')
+    nom_app, slide1, slides, pages, page_content, pagination = movies_attrs(movies, 1)
+    return render(request, 'movies_content.html', locals() )
 
 
 def apropos_app(request):

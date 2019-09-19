@@ -31,17 +31,17 @@
   <!-- Navigation -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Hogi</a>
+      <a class="navbar-brand" href="{% url "index" %}">Hogi</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact</a>
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -77,20 +77,24 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <!-- Slide One - Set the background image for this slide in the line below -->
-        <div class="carousel-item active" style="background-image: url('{{ slide1.slide.url  }}')">
+        <div class="carousel-item active" style="background-image: url('{{ slide1.cover.url  }}')">
           <div class="carousel-caption d-none d-md-block">
-            <h3>First Slide</h3>
-            <p>{{ slide1.about }}</p>
+            <h3>{{ slide1.titre }}</h3>
+            <p>{{ slide1.owner }}</p>
           </div>
         </div>
-        {% for slide in slides %}
-          <div class="carousel-item " style="background-image: url('{{ slide.slide.url  }}')">
-            <div class="carousel-caption d-none d-md-block">
-              <h3>First Slide</h3>
-              <p>{{ slide.about }}</p>
-            </div>
+        <div class="carousel-item " style="background-image: url('{{ slide2.cover.url  }}')">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>{{ slide2.titre }}</h3>
+            <p>{{ slide2.description|truncatewords:10 }}</p>
           </div>
-        {% endfor %}
+        </div>
+        <div class="carousel-item " style="background-image: url('{{ slide3.cover.url  }}')">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>{{ slide3.titre }}</h3>
+            <p>{{ slide3.contenue|truncatewords:10 }}</p>
+          </div>
+        </div>
       </div>
       <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

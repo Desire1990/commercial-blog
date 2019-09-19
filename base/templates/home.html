@@ -5,6 +5,7 @@
 {% block header %}
 
 <header>
+  {% if accueil %}
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -16,31 +17,16 @@
         <div class="carousel-item active" style="background-image: url('{{ slide1.cover.url }}')">
           <div class="carousel-caption d-none d-md-block">
             <h3>{{ slide1.titre }}</h3>
-            <p>This is a description for the first slide.</p>
+            <p>{{ slide1.description|truncatewords:10 }}</p>
           </div>
         </div>
-        {%  for slide in film_obj %}
-        <!-- Slide One - Set the background image for this slide in the line below -->
-        <div class="carousel-item" style="background-image: url('{{ slide.cover.url }}')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>{{ slide.titre }}</h3>
-            <!-- <p>This is a description for the first slide.</p> -->
+        {%  for slide in slides %}
+          <div class="carousel-item" style="background-image: url('{{ slide.cover.url }}')">
+            <div class="carousel-caption d-none d-md-block">
+              <h3>{{ slide.titre }}</h3>
+            <p>{{ slide1.description|truncatewords:10 }}</p>
+            </div>
           </div>
-        </div>
-        <!-- Slide Two - Set the background image for this slide in the line below -->
-        <!-- <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Second Slide</h3>
-            <p>This is a description for the second slide.</p>
-          </div>
-        </div> -->
-        <!-- Slide Three - Set the background image for this slide in the line below -->
-        <!-- <div class="carousel-item" style="background-image: url('http://placehold.it/1900x1080')">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>Third Slide</h3>
-            <p>This is a description for the third slide.</p>
-          </div>
-        </div> -->
         {% endfor %}
       </div>
 
@@ -53,45 +39,16 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-  </header>
-
+  {% endif %}
 {% endblock %}
 
 {% block content %}
 
-<!-- Page Heading/Breadcrumbs -->
-<h1 id="buja" class="mt-4 mb-3">Bienvenue à
-  <small>BujaMovies</small>
-  <!-- <p id="ok">OK</p> -->
-</h1>
+{% block app_content %}
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="{% url 'acceuil_app' %}">BujaMovies</a>
-  </li>
-  <li class="breadcrumb-item active">Acceuil</li>
-</ol>
+{% endblock app_content %}
 
-    <!-- Elements Content -->
-    <div class="row">
-      {% for film_list in filmsPage %}
-      <div class="col-lg-2 col-md-3 col-sm-4 col-6 detail_element">
-        <div class="card h-100">
-          <a href="#"><img id="img" class="card-img-top" src="{{ film_list.cover.url }}" alt="{{ film_list.titre }}" height="200px"></a>
-          <div class="card-body">
-            <h6 class="card-title">
-              <a id="titre_sm" href="{% url 'details_app' film_list.slug %}">{{ film_list.titre }}</a>
-            </h6>
-            <p id="acteur_sm" class="card-text"> <font size="1">{{ film_list.acteur }}</font> </p>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div><hr>
-
-<br>
-    <!-- Pagination -->
-
+{% block pagination %}
     {% if filmsPage.has_other_pages %}
   <ul class="pagination justify-content-center">
     {% if filmsPage.has_previous %}
@@ -133,7 +90,8 @@
     {% endif %}
   </ul>
   {% endif %}
-
+  
+{% endblock pagination %}
 
     <!-- Go back to the top -->
     {% block call %}

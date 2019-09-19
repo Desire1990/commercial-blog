@@ -12,7 +12,7 @@ class FilmForm(forms.ModelForm):
     film = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Film ','class':'form-control-file','class':'form-control'}), label='Film')
     prix_telechargement = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'Prix ','class':'form-control'}), label='')
     class Meta:
-        model = Films
+        model = Film
         fields = ('titre','acteur','description','language','resolution','cover','film','prix_telechargement',)
 
 
