@@ -1,6 +1,6 @@
-from django.shortcuts import render
-
-from django.contrib.auth import logout
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from BujaMovies.models import Film
 from librairie.models import Livre
@@ -8,18 +8,43 @@ from music.models import Music
 from .forms import *
 
 def inscription(request):
-	return HttpResponse("<h1>inscription</h1>")
+	form = InscriptionForm(request.POST or None)
+	if request.method == "POST" and form.is_valid():
+		username = form.cleaned_data['username']
+		password = form.cleaned_data['password']
+		password2 = form.cleaned_data['password2']
+		email = form.cleaned_data['email']
+		avatar = form.cleaned_data['avatar']
+		print(locals)
+		if password==password2:
+			user = User.objects.create_user(username=username, email=email, password=password)
+			Profil(user=user, avatar=avatar).save()
+		if user:
+			login(request, user)
+			return redirect(index)
+	form = InscriptionForm()
+	return render(request, 'inscription.html', locals())
 
 def connexion(request):
-	return HttpResponse("<h1>connexion</h1>")
+	formulaire = ConnexionForm(request.POST)
+	if request.method == "POST" and formulaire.is_valid():
+		username = formulaire.cleaned_data['username']
+		password = formulaire.cleaned_data['password']
+		print(username, password)
+		user = authenticate(username=username, password=password)
+		if user:  # Si l'objet renvoyé n'est pas None
+			login(request, user)
+			return redirect(index)
+	formulaire = ConnexionForm()
+	return render(request, 'sign-in.html', locals())
 
 def deconnexion(request):
 	logout(request)
-	return HttpResponse("<h1>deconnexion</h1>")
+	return redirect(index)
 
 def index(request):
 	slide1 = Music.objects.last()
-	slide2 = Films.objects.last()
+	slide2 = Film.objects.last()
 	slide3 = Livre.objects.last()
 	return render(request, 'index.html', locals())
 

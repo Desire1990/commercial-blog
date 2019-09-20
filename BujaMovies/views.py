@@ -68,7 +68,7 @@ def movies_attrs(movies, page):
 
 def acceuil_app(request):
     accueil = True
-    movies = Films.objects.all().order_by('date')
+    movies = Film.objects.all().order_by('date')
     nom_app, slide1, slides, pages, page_content, pagination = movies_attrs(movies, 1)
     return render(request, 'movies_content.html', locals() )
 
@@ -109,21 +109,21 @@ def contact_app(request):
     return render(request, 'contact.html', locals() )
 
 def ajout_app(request):
-    form_view_film = FilmForm(request.POST or None, request.FILES)
+    form = FilmForm(request.POST or None, request.FILES)
     if request.method == "POST":
-        if form_view_film.is_valid():
-            # form_view_film.save()
+        if form.is_valid():
+            # form.save()
             currentuser = request.user
-            titre = form_view_film.cleaned_data['titre']
-            acteur = form_view_film.cleaned_data['acteur']
-            description = form_view_film.cleaned_data['description']
-            language = form_view_film.cleaned_data['language']
-            resolution = form_view_film.cleaned_data['resolution']
-            cover = form_view_film.cleaned_data['cover']
-            film = form_view_film.cleaned_data['film']
-            prix = form_view_film.cleaned_data['prix_telechargement']
+            titre = form.cleaned_data['titre']
+            acteur = form.cleaned_data['acteur']
+            description = form.cleaned_data['description']
+            language = form.cleaned_data['language']
+            resolution = form.cleaned_data['resolution']
+            cover = form.cleaned_data['cover']
+            film = form.cleaned_data['film']
+            prix = form.cleaned_data['prix_telechargement']
 
             Films(user = currentuser,titre = titre,acteur = acteur,description = description,language = language,resolution = resolution,cover = cover,film = film,prix_telechargement = prix ).save()
             nombre_film = Films.objects.all().count()
             msg = "Enregistrer avec success !!!"
-    return render(request, 'ajouter_film.html', locals() )
+    return render(request, 'movies_form.html', locals() )

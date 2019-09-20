@@ -1,4 +1,7 @@
 {% extends "home.html" %}
+{% block upload %}
+  <a class="dropdown-item" href="{% url 'upload_music' %}">upload a music</a>
+{% endblock %}
 {% block app_content %}
 <h1 id="buja" class="mt-4 mb-3">
   <small>Bienvenue dans l'espace pour</small>
@@ -23,7 +26,11 @@
             <h6 class="card-title">
               <a id="titre_sm" href="{% url 'book' element.slug %}">{{ element.titre }}</a>
             </h6>
-            <p id="acteur_sm" class="card-text"> <font size="1">{{ element.owner }}</font> </p>
+            <p id="acteur_sm" class="card-text">{{ element.owner }}</p>        
+            {% if element.owner.user == user %}
+              <a class="btn btn-sm btn-primary" href="#">modifier</a>
+              <a class="btn btn-sm btn-danger " href="#">supprimer</a>
+            {% endif %}
           </div>
         </div>
       </div>

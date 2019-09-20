@@ -12,11 +12,11 @@
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
-            <h5 class="card-title text-center">Register</h5>
+            <h5 class="card-title text-center">Music Upload form</h5>
             <form method="post" action="." class="form-signin">
               {% csrf_token %}
               {{ form.as_p }}
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Upload</button>
               <a class="d-block text-center mt-2 small" href="{% url 'connexion' %}">Sign In</a>
             </form>
           </div>

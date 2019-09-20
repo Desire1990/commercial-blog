@@ -81,6 +81,10 @@ def logout_view(request):
     logout(request)
     return redirect(reverse(musicList_view))
 
+def upload(request):
+    form = MusicForm(request.POST or None)
+    return render(request, 'music_form.html', locals())
+
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm()
