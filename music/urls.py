@@ -11,4 +11,5 @@ urlpatterns = [
     #path('login/<username>/', views.login_view, name="login"),
     #path('pay/', views.payement_view, name="pay"),
     path('pay/<slug>/', views.payement_view, name="pay"),
+    path('upload_music/', views.upload, name="upload_music"),
 ]

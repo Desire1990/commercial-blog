@@ -78,8 +78,10 @@ def book(request, slug):
     lasts = Livre.objects.filter(owner=book.owner)[:3]
     return render(request, "detail.html", locals())
 
-def ajouter(request, slug):
-    pass
+def ajouter(request):
+    form = BookForm(request.POST or None)
+    return render(request, "book_form.html", locals())
+
 def modifier(request, slug):
     pass
 def supprimer(request, slug):

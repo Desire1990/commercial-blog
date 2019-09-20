@@ -14,6 +14,6 @@ urlpatterns = [
     path( 'apropos_app/', views.apropos_app, name="apropos_app" ),
     path( 'details_app/<str:slug>', views.details_app, name="details_app" ),
     path( 'contact_app/', views.contact_app, name="contact_app" ),
-    path( 'ajout_app/', views.ajout_app, name="ajout_app" ),
+    path( 'upload_movie/', views.ajout_app, name="upload_movie" ),
 
 ]

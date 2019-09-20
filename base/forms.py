@@ -13,8 +13,13 @@ class ContactForm(forms.ModelForm):
         fields = ('name','tel','email','message')
 
 class ConnexionForm(forms.Form):
-    pseudo = forms.CharField( label="", max_length = 20, widget = forms.TextInput( attrs = {"placeholder":"Pseudo",'class':'form-control'} ) )
-    password1 = forms.CharField( label="", max_length = 20 , widget = forms.PasswordInput( attrs = {"placeholder":"Mot de pass",'class':'form-control'} ) )
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'User name ','class':'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'password ', 'type':'password','class':'form-control'}))
 
-
-    
+class InscriptionForm(forms.Form):
+    username = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'username ','class':'form-control'}), label='username')
+    password = forms.CharField( widget=forms.PasswordInput(attrs={'placeholder':'password ','class':'form-control'}), label='password')
+    password2 = forms.CharField( widget=forms.PasswordInput(attrs={'placeholder':'confirm password ','class':'form-control'}), label='confirm password')
+    email = forms.EmailField( widget = forms.TextInput( attrs = {'placeholder':'email adress ','class':'form-control'} ), label='your email adress')
+    avatar = forms.ImageField( widget=forms.FileInput(attrs={'class':'form-control'}), label='your profile picture')
+ 
