@@ -55,7 +55,7 @@ def about_music_view(request, slug=None):
     else:
         musics = Music.objects.filter(slug=slug)
 
-    return render(request, 'about_music.html', locals())
+    return render(request, 'music_detail.html', locals())
 
 
 def login_view(request):
