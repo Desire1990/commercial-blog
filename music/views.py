@@ -83,7 +83,7 @@ def logout_view(request):
 
 def upload(request):
     form = MusicForm(request.POST or None)
-    return render(request, 'music_form.html', locals())
+    return render(request, 'upload_music.html', locals())
 
 def register(request):
     if request.method == 'POST':

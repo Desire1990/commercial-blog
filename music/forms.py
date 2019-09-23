@@ -11,11 +11,11 @@ class LoginForm(forms.Form):
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
 class MusicForm(forms.ModelForm):
-	titre = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'Titre ','class':'form-control'}), label='')
-	description = forms.CharField( widget = forms.Textarea( attrs = {'placeholder':'Description ','class':'form-control','rows':3,'cols':40} ), label='')
-	audio = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Affiche ','class':'form-control-file','class':'form-control'}), label='Cover')
-	cover = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Film ','class':'form-control-file','class':'form-control'}), label='Film')
-	price = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'Prix ','class':'form-control'}), label='')
+	titre = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'Titre ','class':'form-control'}), label='Titre')
+	description = forms.CharField( widget = forms.Textarea( attrs = {'placeholder':'Description ','class':'form-control','rows':3,'cols':40} ), label='Description')
+	audio = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Affiche ','class':'form-control-file','class':'form-control'}), label='Audio')
+	cover = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Film ','class':'form-control-file','class':'form-control'}), label='Cover')
+	price = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'Prix ','class':'form-control'}), label='Prix')
 	class Meta:
 		model = Music
 		fields = ('audio', 'cover', 'titre', 'description', "price", 'release')

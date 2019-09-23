@@ -19,20 +19,20 @@
     <link rel="stylesheet" href="{% static 'css/audioplayer.css' %}">
 
 </head>
-<body>
+<body bgcolor="gray">
     <!-- ##### Song Area Start ##### -->
-    <div class="one-music-songs-area mb-70">
+    <div class="w-25" style="border: 1px solid black">
         <div class="container">
             <div class="row">
 
                 <!-- Single Song Area -->
                 {% for music in musics %}
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end float-left">
-                        <div class="song-thumbnail w-20">
+                <div class="col">
+                    <div class="bg-success" >
+                        <div class="d-inline" style="border: 1px solid black">
                             <img src="{{ music.cover.url }}" alt="">
                         </div>
-                        <div class="song-play-area ">
+                        <div class="bg-success">
                             <div class="song-name">
                                 <p>{{ music.titre }}</p>
                             </div>

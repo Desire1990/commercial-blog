@@ -38,11 +38,15 @@ def connexion(request):
 	formulaire = ConnexionForm()
 	return render(request, 'sign-in.html', locals())
 
+
+
 def deconnexion(request):
 	logout(request)
 	return redirect(index)
 
 def index(request):
+	musics = Music.objects.all()
+	musics = musics[0:3]
 	slide1 = Music.objects.last()
 	slide2 = Film.objects.last()
 	slide3 = Livre.objects.last()
