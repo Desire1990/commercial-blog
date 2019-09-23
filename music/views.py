@@ -55,7 +55,7 @@ def about_music_view(request, slug=None):
     else:
         musics = Music.objects.filter(slug=slug)
 
-    return render(request, 'about_music.html', locals())
+    return render(request, 'music_detail.html', locals())
 
 
 def login_view(request):
@@ -83,7 +83,7 @@ def logout_view(request):
 
 def upload(request):
     form = MusicForm(request.POST or None)
-    return render(request, 'music_form.html', locals())
+    return render(request, 'upload_music.html', locals())
 
 def register(request):
     if request.method == 'POST':

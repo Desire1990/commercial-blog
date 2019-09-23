@@ -14,9 +14,9 @@
 <br>
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
-    <a href="{% url 'movies' %}">Movies' home</a>
+    <a href="{% url 'movies' %}"></a>
   </li>
-  <li class="breadcrumb-item active">Details</li>
+  <li class="breadcrumb-item active">Details music</li>
 </ol>
 
     <!-- Portfolio Item Row -->
@@ -25,7 +25,7 @@
       <div id="cover_back" class="col-md-4">
         <img id="cover_detail" class="img-fluid" src="{{ film_obj.cover.url }}" alt="">
         <table>
-          <h5 class="my-2">&nbsp;&nbsp;Votre avis compte.</h5>
+          <h5 class="my-2">&nbsp;&nbsp;Nitre avis compte.</h5>
             <tr>
             </tr>
             <tr>
@@ -63,22 +63,24 @@
         </table>
       </div>
 
+      {% for music in musics %}
+
       <div class="col">
         <div class="card h-100">
-          <h5 class="card-header"> {{ film_obj }}[{{ film_obj.resolution }}] <br> Seulement à <i>{{ film_obj.prix_telechargement }}</i> FBU</h5>
+          <h5 class="card-header">{{ music.titre }} : {{ music.price }}$</h5>
           <div class="card-body">
-            <div class="display-5"><p>Description du contenue selectionner</p></div>
-            <div class="font-italic">Ecrire iciEcrire iciEcrire iciEcrire iciEcrire iciEcrire iciEcrire ici</div>
+            <div class="display-5"><p>Description</p></div>
+            <div class="font-italic">{{ music.description }}</div>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <font size="2">Acteur &emsp;&emsp;&emsp; : {{ film_obj.acteur }}</font>
+              <font size="2">Titre &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;: {{ music.titre }}</font>
             </li>
             <li class="list-group-item">
-              <font size="2">Réalisateur &emsp; : {{ film_obj.realisateur }}</font>
+              <font size="2">Owner/Label &emsp;&emsp; : {{ music.owner }}</font>
             </li>
             <li class="list-group-item">
-              <font size="2">Studio &emsp;&emsp;&emsp; : {{ film_obj.studio }}</font>
+              <font size="2">Sortie &emsp;&emsp;&emsp;&emsp;&emsp; : {{ music.release }}</font>
             </li>
             <li class="list-group-item">
               <form class="" action="index.html" method="post">
@@ -95,7 +97,7 @@
 
     </div>
     <!-- /.row -->
-
+    {% endfor %}
     <!-- Related Projects Row -->
     <h3 class="my-4">Recherches associées:
       <h4><small>Ses nouveautés</small></h4>
