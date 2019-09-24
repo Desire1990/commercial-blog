@@ -1,67 +1,36 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title -->
-    <title>One Music - Modern Music HTML5 Template</title>
-
-    <!-- Favicon -->
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/audioplayer.css' %}">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
 
 </head>
-<body bgcolor="gray">
-    <!-- ##### Song Area Start ##### -->
-    <div class="w-25" style="border: 1px solid black">
-        <div class="container">
-            <div class="row">
+<body>
+        {% for music in musics %}
+        <div id="bg">
+            <div id="blackLayer"></div>
+            <img src="{{ music.cover.url }}">
 
-                <!-- Single Song Area -->
-                {% for music in musics %}
-                <div class="col">
-                    <div class="bg-success" >
-                        <div class="d-inline" style="border: 1px solid black">
-                            <img src="{{ music.cover.url }}" alt="">
-                        </div>
-                        <div class="bg-success">
-                            <div class="song-name">
-                                <p>{{ music.titre }}</p>
-                            </div>
-                            <audio preload="auto" controls src="{{ music.audio.url }}" >
-                            </audio>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-
-            </div>
         </div>
-    </div>
-    <!-- ##### Song Area End ##### -->
+        <div id="main">
+            
+            <div id="image">
+                <img src="{{ music.cover.url }}">
+            </div>
+            <div id="player">
+                
+                <div id="songTitle">{{ music.titre }}</div>
 
-   
-
+                <div id="playerHtml">
+                    <audio controls  controlsList="nodownload">
+                        <source src="{{ music.audio.url }}" type="audio/mp3">
+                    </audio>
+                </div>
+            </div>
+            
+        </div>
+        {% endfor %}
     
-    <!-- ##### All Javascript Script ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="{% static 'jquery/jquery-2.2.4.min.js' %}"></script>
-    <!-- Popper js -->
-    <script src="{% static 'js/popper.min.js' %} "></script>
-    <!-- Bootstrap js -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <!-- All Plugins js -->
-    <script src="{% static 'js/plugins.js' %}"></script>
-    <!-- Active js -->
-    <script src="{% static 'js/active.js' %}"></script>
-</body>
 
+</body>
 </html>
