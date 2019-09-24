@@ -42,7 +42,7 @@ class Film(models.Model):
         # {self.resolution} {self.acteur} {self.language} {self.description} {self.date}
 
 class Commentaires(models.Model):
-    user        = models.ForeignKey ( "base.Profil", on_delete = models.CASCADE )
+    user        = models.ForeignKey ( User, on_delete = models.CASCADE )
     titre       = models.ForeignKey ( Film, verbose_name = "Choisir Titre", on_delete = models.CASCADE )
     commentaire = models.TextField ( verbose_name = "Commenter",null=False, blank = False )
     date        = models.DateTimeField ( default = timezone.now )
@@ -51,7 +51,8 @@ class Commentaires(models.Model):
         return f"{self.user} made this comment {self.commentaire}"
 
 class Avis(models.Model):
-    user     = models.ForeignKey ( "base.Profil", on_delete = models.CASCADE )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    u_email  = models.EmailField ( max_length=50, verbose_name = "Email")
     slug_key = models.CharField ( max_length=50, verbose_name = "Slug key")
     likes    = models.BooleanField ( default = False )
     dislikes = models.BooleanField ( default = False )
@@ -60,7 +61,7 @@ class Avis(models.Model):
         return f"{self.slug_key} ~ likes: {self.likes} ~dislikes: {self.dislikes}"
 
 class Achats(models.Model):
-    user    = models.ForeignKey ( "base.Profil", on_delete = models.CASCADE )
+    user        = models.ForeignKey ( User, on_delete = models.CASCADE )
     montant = models.FloatField ( verbose_name = "Montant", blank = False )
     slug    = models.ForeignKey ( Film, on_delete = models.CASCADE, max_length=100, null = False )
     date    = models.DateTimeField ( default = timezone.now )

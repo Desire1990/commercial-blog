@@ -19,12 +19,12 @@ class FilmForm(forms.ModelForm):
 
 
 class CommentaireForm(forms.Form):
-    commentaire = forms.CharField( widget = forms.Textarea( attrs = {"rows":3,"cols":40} ))
+    commentaire = forms.CharField( widget = forms.Textarea( attrs = {"class":'form-control',"rows":5,"cols":100,"maxlength":999,"style":"resize:none","required data-validation-required-message":"Commentaire oublié..."} ) )
 
 class LikeForm(forms.ModelForm):
     class Meta:
         model = Avis
-        exclude = ('user','slug_key',)
+        exclude = ('user','slug_key','u_email',)
 
 class InscriptionForm(forms.Form):
     pseudo = forms.CharField(label = "", max_length = 20, widget = forms.TextInput( attrs = {"placeholder":"Pseudo",'class':'form-control'} ) )

@@ -19,6 +19,7 @@
 
       <div id="cover_back" class="col-md-4">
         <img id="cover_detail" class="img-fluid" src="{{ page_content.cover.url }}" alt="">
+        {% if user.is_authenticated %}
         <table>
           <h5 class="my-2">&nbsp;&nbsp;Votre avis compte.</h5>
             <tr>
@@ -30,22 +31,43 @@
                         {% csrf_token %}
                         <!-- <button onclick="document.getElementById('like_dislike').submit();">like {{ form_view_avi.likes }}</button>
                         <button onclick="document.getElementById('like_dislike').submit();">dislike {{ form_view_avi.dislikes }}</button>  -->
+
                         <button class="btn btn-sm" type="submit" onclick="theForm()">
                             <!-- {{ form_view_avi.likes }} -->
-                            <input aria-describedby="inputGroup-sizing-sm"  style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
+                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.likes == False %}
+                            <input aria-describedby="inputGroup-sizing-sm" style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
                                     class="form-control"
                                     type="submit"
                                     name="likes"
-                                    value="Like">
+                                    value=  "Likes {{ all_likes }} ">
+                            {% endif %}
+                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.likes == True %}
+                            <input aria-describedby="inputGroup-sizing-sm" disabled style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
+                                    class="form-control"
+                                    type="submit"
+                                    name="likes"
+                                    value=  "Likes {{ all_likes }} ">
+                            {% endif %}
                         </button>
-                        <button class="btn btn-sm" type="submit" onclick="theForm()">
+                        
+                        <button class="btn btn-sm"  type="submit" onclick="theForm()">
                             <!-- {{ form_view_avi.dislikes }} -->
-                            <input  style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
+                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.dislikes == False %}
+                            <input aria-describedby="inputGroup-sizing-sm" style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
                                     class="form-control"
                                     type="submit"
                                     name="dislikes"
-                                    value="Dislike">
+                                    value="Dislikes {{ all_dislikes }} ">
+                            {% endif %}
+                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.dislikes == True %}
+                            <input aria-describedby="inputGroup-sizing-sm" disabled style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
+                                    class="form-control"
+                                    type="submit"
+                                    name="dislikes"
+                                    value="Dislikes {{ all_dislikes }} ">
+                            {% endif %}
                         </button>
+
                     </form>
                     <!-- Scripts for likes -->
                     <script>
@@ -56,11 +78,12 @@
                 </td>
             </tr>
         </table>
+        {% endif %}
       </div>
 
       <div class="col">
         <div class="card h-100">
-          <h5 class="card-header"> {{ page_content }}[{{ page_content.resolution }}] <br> Seulement à <i>{{ page_content.prix_telechargement }}</i> FBU</h5>
+          <h5 class="card-header"> {{ page_content }}[{{ page_content.resolution }}] <br> Seulement à <i>{{ page_content.prix }}</i> FBU</h5>
           <div class="card-body">
             <div class="display-5"><p>Description</p></div>
             <div class="font-italic">{{ page_content.description }}</div>
@@ -78,9 +101,9 @@
             <li class="list-group-item">
               <form class="" action="index.html" method="post">
                 <a href="#" class="btn btn-primary">Téléchargement Gratuit</a>
-                <a id="telechargerA" href="#" class="btn btn-success">Télécharger Payant</a>
-                <a id="telechargerB" href="#" class="btn btn-success">Validation</a>
-                <a id="telechargerC" href="#" class="btn btn-success">Télécharger</a>
+                <a id="acheter" href="#" class="btn btn-success">Télécharger Payant</a>
+                <a id="valider" href="#" class="btn btn-success">Validation</a>
+                <a id="telecharger" href="#" class="btn btn-success">Télécharger</a>
                 <input class="form-control" style ="margin-top: 5px;" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
               </form>
             </li>
@@ -90,7 +113,42 @@
 
     </div>
     <!-- /.row -->
+    <div class="row">
 
+      <div class="col-lg-8 mb-4">
+        {% if request.user.is_authenticated %}
+        <h3>Lire les commentaires.</h3>
+        <table>
+            {% for com_list in comm_obj %}
+            <tr>
+              <td>
+                
+                  <i><b>{{ com_list.user }}</b>, le {{ com_list.date }} <br>{{ com_list.commentaire }}</i>
+              </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+
+      <!-- Comment Form -->
+      <div class="col-lg-8 mb-4">
+        {% if request.user.is_authenticated %}
+        <label>Votre commentaire compte.</label>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form_view_comm.as_p }}
+            <input type="submit" class="btn btn-dark" value="Commenter" />
+        </form>
+          
+          {% else %}
+          
+          <i>Pour commenter, Vous devez vous connecter d'abord!</i>
+          
+          {% endif %}
+      </div>
+
+    </div>
 <!-- Related Projects Row -->
 <h3 class="my-4">Recherches associées:
   <h4><small>Ses nouveautés</small></h4>
