@@ -16,7 +16,7 @@
 <br>
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
-    <a href="{% url 'acceuil_app' %}">BujaMovies</a>
+    <a href="{% url 'index' %}">Home</a>
   </li>
   <li class="breadcrumb-item active">Contact</li>
 </ol>
@@ -59,7 +59,7 @@
         <form name="sentMessage" id="contactForm" action = {% url 'contact' %} method="post" novalidate>
           {% csrf_token %}
           {{ form.as_p }}
-          <button type="submit" class="btn btn-success" id="sendMessageButton">Envoyez votre Message</button>
+          <button type="submit" class="btn btn-success col-lg-4" id="sendMessageButton">Envoyez votre Message</button>
         </form>
       </div>
 

@@ -56,4 +56,4 @@ def contact(request):
 	return render(request, "contact.html", locals())
 
 def apropos(request):
-	return HttpResponse("<h1>apropos</h1>")
+	return render(request, "about.html", locals())

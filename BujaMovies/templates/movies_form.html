@@ -3,26 +3,44 @@
 {% block title %} {{ inscription }} {% endblock %}
 
 {% block content %}
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 col-xl-9 mx-auto">
-        <div class="card card-signin flex-row my-5">
-          <div class="card-img-left d-none d-md-flex">
-             <!-- Background image for card set in CSS! -->
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-center">Upload form</h5>
-            <form method="post" action="." class="form-signin">
+
+    <br>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'movies' %}">Movies' Home</a>
+        </li>
+        <li class="breadcrumb-item active">Add movie</li>
+      </ol>
+
+<!-- row 1 -->
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-12 col-md-6 text-center col-sm-12">
+        <h2> Upload movie </h2><hr><br>
+    </div>
+    <div class="col"></div>
+</div>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-12 col-md-6 col-sm-12">
+      <!-- <h2> <u>Ajouter le nouveau film</u> </h2> -->
+      <i style="color: green"> {{ msg }}</i>
+      <i style="color: red"> {{ mm }}</i>
+      <form action="" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
               {% csrf_token %}
               {{ form.as_p }}
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Upload</button>
-              <a class="d-block text-center mt-2 small" href="{% url 'connexion' %}">Sign In</a>
-            </form>
+              {% if exiting == form.film %}
+              {{ ms }}
+              {% else %}
+              <input type="submit" value="Enregistrer" class="btn btn-outline-primary btn-block"/>
+              <a class="d-block text-center text-dark mt-2 medium" href="{% url 'connexion' %}">Sign In</a>
+              {% endif %}
           </div>
-        </div>
-      </div>
+      </form>
     </div>
-  </div>
-</body>
+    <div class="col"></div>
+</div>
+
 {% endblock %}
