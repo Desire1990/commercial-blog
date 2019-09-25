@@ -18,5 +18,5 @@ class MusicForm(forms.ModelForm):
 	price = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'Prix ','class':'form-control'}), label='Prix')
 	class Meta:
 		model = Music
-		fields = ('audio', 'cover', 'titre', 'description', "price", 'release')
+		fields = ('audio', 'cover', 'owner', 'titre', 'description', "price")
 		

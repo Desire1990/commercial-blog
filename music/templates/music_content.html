@@ -22,19 +22,22 @@
       {% for element in page_content %}
       <div class="col-lg-3 col-md-4 col-sm-6 detail_element ">
         <div class="card h-80">
-          <a href="{% url 'about_music' element.slug %}"><img id="img" class="card-img-top" src="{{ element.cover.url }}" alt="{{ element.titre }}" ></a>
+          <a href="{% url 'about_music' element.slug %}"><img id="img" class="card-img-top" width="208px" height="208px" src="{{ element.cover.url }}" alt="{{ element.titre }}" ></a>
           <div class="card-body">
-            <h4 class="card-title">
-              <a id="titre_sm" href="{% url 'about_music' element.slug %}">{{ element.titre }}</a>
-            </h4>
+            <div>
+              <h4 class="card-title" >
+                <a id="titre_sm" href="{% url 'about_music' element.slug %}" >{{ element.titre }}</a>
+              </h4>
+            </div >
             <p id="acteur_sm" class="card-text">{{ element.owner }}</p>        
             {% if element.owner.user == user %}
-              <a class="btn btn-sm btn-info mb-2 " href="#">Modifier</a>
-              <a class="btn btn-sm btn-danger float-right" href="#">Supprimer</a>
-            {% endif %}
-            {% if user.is_authenticated %}
+              <a class="btn btn-sm btn-info mb-2 " href="{% url 'update_music' element.id %}">Modifier</a>
+              <a class="btn btn-sm btn-danger float-right" href="{% url 'delete_music' element.slug %}">Supprimer</a>
+              <a class="btn btn-sm btn-success " href="{% url 'music_player' element.slug %}">PlayNow</a>
+              <a class="btn btn-sm btn-warning float-right" href="{{ element.audio.url }}" download>Download</a>
+            {% else %}
                 <a class="btn btn-sm btn-success " href="{% url 'music_player' element.slug %}">PlayNow</a>
-                <a class="btn btn-sm btn-warning float-right" href="{{ element.audio.url }}" download>Download</a>
+                <a class="btn btn-sm btn-warning float-right" href="{% url 'about_music' element.slug %}" >Acheter</a>
             {% endif %}
             
           </div>

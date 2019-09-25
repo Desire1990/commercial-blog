@@ -126,4 +126,4 @@ def ajout_app(request):
             Films(user = currentuser,titre = titre,acteur = acteur,description = description,language = language,resolution = resolution,cover = cover,film = film,prix_telechargement = prix ).save()
             nombre_film = Films.objects.all().count()
             msg = "Enregistrer avec success !!!"
-    return render(request, 'movies_form.html', locals() )
+    return render(request, 'movies_form.html', locals())

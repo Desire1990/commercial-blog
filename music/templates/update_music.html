@@ -12,12 +12,16 @@
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
-            <h5 class="card-title text-center">Music Upload form</h5>
+            <h5 class="card-title text-center">Music Update form</h5>
             <form method="post" action="." class="form-signin" enctype="multipart/form-data" >
               {% csrf_token %}
               {{ form.as_p }}
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Upload</button>
-              <a class="d-block text-center mt-2 small" href="{% url 'connexion' %}">Sign In</a>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Update</button>
+              {% if user.is_authenticated %}
+                <a class="d-block text-center mt-2 small" href="{% url 'deconnexion' %}">Sign Out</a>
+              {% else %}
+                <a class="d-block text-center mt-2 small" href="{% url 'connexion' %}">Sign In</a>
+              {% endif %}
             </form>
           </div>
         </div>

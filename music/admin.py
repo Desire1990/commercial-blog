@@ -2,10 +2,11 @@ from django.contrib import admin
 from . models import *
 
 class MusicAdmin(admin.ModelAdmin):
-	list_display = ('titre', 'owner', 'release', 'date', 'price')
-	list_filter = ('titre', 'owner', 'release')
-	ordering = ('date',)
-	search_field = ('titre', 'owner', 'release')
+    list_display = ('titre', 'owner', 'release', 'date', 'price')
+    list_filter = ('titre', 'owner', 'release')
+    ordering = ('date',)
+    search_field = ('titre', 'owner', 'release')
+    prepopulated_fields = {'slug': ('titre', )}
 
 class PayementAdmin(admin.ModelAdmin):
     list_display = ('payement_method', 'amount', 'identification')

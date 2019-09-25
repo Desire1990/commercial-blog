@@ -18,12 +18,12 @@
   </li>
   <li class="breadcrumb-item active">Details music</li>
 </ol>
-
+  {% for music in musics %}
     <!-- Portfolio Item Row -->
     <div class="row">
 
       <div id="cover_back" class="col-md-4">
-        <img id="cover_detail" class="img-fluid" src="{{ film_obj.cover.url }}" alt="">
+        <img id="cover_detail" class="img-fluid" src="{{ music.cover.url }}" alt="">
         <table>
           <h5 class="my-2">&nbsp;&nbsp;Nitre avis compte.</h5>
             <tr>
@@ -63,7 +63,7 @@
         </table>
       </div>
 
-      {% for music in musics %}
+      
 
       <div class="col">
         <div class="card h-100">
@@ -82,15 +82,24 @@
             <li class="list-group-item">
               <font size="2">Sortie &emsp;&emsp;&emsp;&emsp;&emsp; : {{ music.release }}</font>
             </li>
+            {% if music.owner != user %}
             <li class="list-group-item">
               <form class="" action="index.html" method="post">
                 <a href="#" class="btn btn-primary">Téléchargement Gratuit</a>
-                <a id="telechargerA" href="#" class="btn btn-success">Télécharger Payant</a>
+                <a id="telechargerA" href="#" class="btn btn-success mr-5">Télécharger Payant</a>
                 <a id="telechargerB" href="#" class="btn btn-success">Validation</a>
                 <a id="telechargerC" href="#" class="btn btn-success">Télécharger</a>
                 <input class="form-control" style ="margin-top: 5px;" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
               </form>
             </li>
+            {% else %}
+            <li class="list-group-item">
+              <form class="" action="index.html" method="post">
+                <a id="telechargerC" href="{{ music.audio.url }}" class="btn btn-success">Télécharger</a>
+                <input class="form-control" style ="margin-top: 5px;" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
+              </form>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -98,39 +107,24 @@
     </div>
     <!-- /.row -->
     {% endfor %}
+    
     <!-- Related Projects Row -->
     <h3 class="my-4">Recherches associées:
       <h4><small>Ses nouveautés</small></h4>
     </h3>
 
-
+    {% for assoc in others_music %}
     <div class="row">
 
       <div class="col-md-3 col-sm-6 mb-4">
         <a href="#">
-          <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-        </a>
-      </div>
-
-      <div class="col-md-3 col-sm-6 mb-4">
-        <a href="#">
-          <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-        </a>
-      </div>
-
-      <div class="col-md-3 col-sm-6 mb-4">
-        <a href="#">
-          <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-        </a>
-      </div>
-
-      <div class="col-md-3 col-sm-6 mb-4">
-        <a href="#">
-          <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          <img class="img-fluid" src="{{ assoc.cover.url }}" alt="">
         </a>
       </div>
 
     </div>
+    {% endfor %}
+    
     <!-- /.row -->
 
   {% endblock %}

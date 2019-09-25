@@ -20,6 +20,23 @@ def music_attrs(elements, page):
     nom_app = "Musiques"
     return (nom_app, slide1, slides, pages, page_content, pagination)
 
+def delete_music_view(request, slug):
+    umuziki = Music.objects.get(slug=slug)
+    if request.user == umuziki.owner.user:
+        umuziki.delete()
+    return redirect('music')
+
+def update_music_view(request, id):
+    music_id = Music.objects.get(id=id)
+    if request.method == 'POST':
+        form = MusicForm(request.POST, request.FILES, instance = music_id)
+        if form.is_valid():
+            form.save()
+            return redirect('music')
+    else:
+        form = MusicForm(instance= music_id)
+    return render(request, 'update_music.html', {'form': form})
+
 def musicList_view(request):
     musics = Music.objects.all()
     accueil = True
@@ -82,8 +99,14 @@ def logout_view(request):
     return redirect(reverse(musicList_view))
 
 def upload(request):
-    form = MusicForm(request.POST or None)
-    return render(request, 'upload_music.html', locals())
+    if request.method == 'POST':
+        form = MusicForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('music')
+    else:
+        form = MusicForm()
+    return render(request, 'upload_music.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
