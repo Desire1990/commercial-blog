@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} "details" {% endblock %}
+{% block title %} {{ page_title }} {% endblock %}
 
 {% block header %}{% endblock %}
 
@@ -34,38 +34,21 @@
 
                         <button class="btn btn-sm" type="submit" onclick="theForm()">
                             <!-- {{ form_view_avi.likes }} -->
-                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.likes == False %}
+ 
                             <input aria-describedby="inputGroup-sizing-sm" style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
                                     class="form-control"
                                     type="submit"
                                     name="likes"
                                     value=  "Likes {{ all_likes }} ">
-                            {% endif %}
-                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.likes == True %}
-                            <input aria-describedby="inputGroup-sizing-sm" disabled style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
-                                    class="form-control"
-                                    type="submit"
-                                    name="likes"
-                                    value=  "Likes {{ all_likes }} ">
-                            {% endif %}
                         </button>
                         
                         <button class="btn btn-sm"  type="submit" onclick="theForm()">
                             <!-- {{ form_view_avi.dislikes }} -->
-                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.dislikes == False %}
                             <input aria-describedby="inputGroup-sizing-sm" style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
                                     class="form-control"
                                     type="submit"
                                     name="dislikes"
                                     value="Dislikes {{ all_dislikes }} ">
-                            {% endif %}
-                            {% if thumbs.user == current_user and thumbs.u_email == current_email and thumbs.dislikes == True %}
-                            <input aria-describedby="inputGroup-sizing-sm" disabled style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
-                                    class="form-control"
-                                    type="submit"
-                                    name="dislikes"
-                                    value="Dislikes {{ all_dislikes }} ">
-                            {% endif %}
                         </button>
 
                     </form>
@@ -96,7 +79,10 @@
               <font size="2">Réalisateur &emsp; : {{ page_content.realisateur }}</font>
             </li>
             <li class="list-group-item">
-              <font size="2">Studio &emsp;&emsp;&emsp; : {{ page_content.studio }}</font>
+              <font size="2">Studio &emsp;&emsp;&emsp; : {{ page_content.studio }} <br>
+                Sortie en &emsp;&emsp; : {{ page_content.date|date:"Y" }} <br>
+                Ajouté par&emsp;&emsp;: {{ page_content.user }}
+              </font>
             </li>
             <li class="list-group-item">
               <form class="" action="index.html" method="post">
@@ -123,7 +109,9 @@
             <tr>
               <td>
                 
-                  <i><b>{{ com_list.user }}</b>, le {{ com_list.date }} <br>{{ com_list.commentaire }}</i>
+                  <i><b>{{ com_list.user }}</b>
+                    <font size = "1">, le {{ com_list.date }}</font>
+                    <br>&emsp;&emsp;{{ com_list.commentaire }}</i>
               </td>
             </tr>
             {% endfor %}
@@ -158,7 +146,7 @@
   <div class="col-md-3 col-sm-6 mb-4">
     <a href="{% url 'details_app' assoc.slug %}">
       <!-- Photo size is 500 x 300 -->
-      <img class="img-fluid" src="{{ assoc.cover.url }}" alt="{{ assoc.cover.titre }}" width="500px" height="300px"> 
+      <img class="img-fluid" src="{{ assoc.cover.url }}" alt="{{ assoc.cover.titre }}" width="300px" height="100px"> 
     </a>
   </div>
   {% endfor %}

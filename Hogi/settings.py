@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'librairie',
     'BujaMovies',
     'music',
-    'base'
+    'base',
+    'django_cleanup',
 ]
 
 MIDDLEWARE = [

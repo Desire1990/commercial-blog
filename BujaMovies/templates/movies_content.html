@@ -1,10 +1,54 @@
-{% extends "home.html" %} {% block upload %}
+{% extends "home.html" %} 
+{% block upload %}
 <a class="dropdown-item" href="{% url 'upload_movie' %}">Upload movie</a>
-{% endblock %} {% block app_content %}
+{% endblock %}
+
+{% block title %} {{ page_title }} {% endblock %}
+
+{% block header %}
+
+<header>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active" style="background-image: url('{{ slide1.cover.url }}')">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>{{ film_obj.titre }}</h3>
+        </div>
+      </div>
+      {%  for slide in film_obj %}
+      <!-- Slide One - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('{{ slide.cover.url }}')">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>{{ slide.titre }}</h3>
+          <!-- <p>This is a description for the first slide.</p> -->
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</header>
+
+{% endblock %}
+
+{% block app_content %}
 <h1 id="buja" class="mt-4 mb-3">
   <small>Bienvenue dans l'espace pour</small>
   {{ nom_app }}
-  <!-- <p id="ok">OK</p> -->
 </h1>
 
 <ol class="breadcrumb">
@@ -16,7 +60,7 @@
 
 <!-- Elements Content -->
 <div class="row">
-  {% for element in page_content %}
+  {% for element in filmsPage %}
   <div class="col-lg-2 col-md-3 col-sm-4 col-6 detail_element">
     <div class="card h-100">
       <a href="#">
@@ -32,10 +76,10 @@
             {{ element.titre }}
           </a>
         </h6>
-        <p id="acteur_sm" class="card-text">{{ element.owner }}</p>
-        {% if element.owner.user == user %}
-        <a class="btn btn-sm btn-primary" href="{% url 'upload_movie' %}">modifier</a>
-        <a class="btn btn-sm btn-danger " href="#">supprimer</a>
+        <p id="acteur_sm" class="card-text">{{ element.acteur }}</p>
+        {% if element.user == user %}
+        <a class="btn btn-sm btn-primary btn-block" href="{% url 'update_movie' element.id %}">Modifier</a>
+        <a class="btn btn-sm btn-danger btn-block mt-1 " href="{% url 'delete_movie' element.slug %}">Supprimer</a>
         {% endif %}
       </div>
     </div>
@@ -44,4 +88,6 @@
 </div>
 <hr />
 <br />
+
+
 {% endblock app_content %}

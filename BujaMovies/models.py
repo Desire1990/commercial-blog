@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.urls import reverse
 
 # Create your models here.
 
@@ -26,13 +27,13 @@ class Film(models.Model):
     cover       = models.ImageField ( upload_to ="movies/Covers/", null = True )
     film        = models.FileField ( upload_to ="movies/Videos/", null = True )
     studio      = models.CharField ( verbose_name = "Studio",max_length = 30, blank = False, null = False )
-    prix        = models.FloatField( verbose_name="Prix de Téléchargement", help_text="BIF", null=False, blank=False)
+    prix        = models.DecimalField( verbose_name="Prix de Téléchargement", decimal_places = 2,max_digits = 10000, help_text="BIF", null=False, blank=False)
     realisateur = models.CharField ( verbose_name = "Réalisateur", max_length = 50, null = False, blank = True, default = "Lui-même")
 
 
-    def save(self,*args,**kwargs):
+    def save( self, *args, **kwargs ):
         self.slug = slugify(self.titre[:30]+str(self.date))#to compare if the we found identical values
-        super(Film, self).save(*args, **kwargs)
+        super( Film, self ).save( *args, **kwargs )
 
     class Meta:
         ordering = ['date']
@@ -51,7 +52,7 @@ class Commentaires(models.Model):
         return f"{self.user} made this comment {self.commentaire}"
 
 class Avis(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user     = models.ForeignKey(User, on_delete=models.CASCADE)
     u_email  = models.EmailField ( max_length=50, verbose_name = "Email")
     slug_key = models.CharField ( max_length=50, verbose_name = "Slug key")
     likes    = models.BooleanField ( default = False )
