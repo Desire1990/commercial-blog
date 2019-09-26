@@ -15,4 +15,5 @@ urlpatterns = [
     path('add_book/', views.ajouter, name='add_book'), 
     path('update_book/<slug>', views.modifier, name='update_book'), 
     path('remove_book/<slug>', views.supprimer, name='remove_book'), 
+    path('like/<slug>/<new_value>', views.like, name='like'), 
 ]

@@ -80,6 +80,11 @@ def books_by_annee(request, annee, page):
 def book(request, slug):
     book = Livre.objects.get(slug=slug)
     lasts = Livre.objects.filter(owner=book.owner)[:3]
+    try:
+        like_value = Like.objects.get(what=book,
+            who=request.user.profil).like
+    except:
+        like_value = 0
     return render(request, "library_detail.html", locals())
 
 @login_required(redirect_field_name='login')
@@ -113,3 +118,17 @@ def supprimer(request, slug):
     if book.owner.user == request.user:
         book.delete()
     return redirect("library")
+
+@login_required(redirect_field_name='login')
+def like(request, slug, new_value):
+    book = Livre.objects.get(slug=slug)
+    try:
+        like = Like.objects.get(what=book, who=request.user.profil)
+    except:
+        like = Like(what=book, who=request.user.profil)
+    if like.like == new_value:
+        like.like = 0
+    else:
+        like.like = new_value
+    like.save()
+    return redirect("book", slug=slug)
