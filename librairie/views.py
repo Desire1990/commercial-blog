@@ -1,5 +1,6 @@
 from django.shortcuts import *
 from django.core.paginator import Paginator
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, models
 from django.db.models import Q
 from django.utils.text import slugify
@@ -51,29 +52,30 @@ def books(request, page=1):
     return render(request, "library_content.html", locals())
 
 def books_by_auteur(request, auteur, page):
-    books = Livre.objects.filter(id=auteur)
+    auteur = User.objects.get(username=auteur)
+    books = Livre.objects.filter(owner=auteur.profil)
     accueil = False
     nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
-    return render(request, "home.html", locals())
+    return render(request, "library_content.html", locals())
     
 def books_by_maison(request, maison, page):
     books = Livre.objects.filter(maison = maison)
     accueil = False
     nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
-    return render(request, "home.html", locals())
+    return render(request, "library_content.html", locals())
     
 def books_by_categorie(request, categorie, page):
     categorie = Categorie.objects.get(categorie=categorie)
     books = Livre.objects.filter(categorie=categorie)
     accueil = False
     nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
-    return render(request, "home.html", locals())
+    return render(request, "library_content.html", locals())
     
 def books_by_annee(request, annee, page):
     books = Livre.objects.filter(annee=annee)
     accueil = False
     nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
-    return render(request, "home.html", locals())
+    return render(request, "library_content.html", locals())
 
 def book(request, slug):
     book = Livre.objects.get(slug=slug)

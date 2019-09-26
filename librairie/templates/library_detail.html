@@ -24,37 +24,8 @@
 
       <div id="cover_back" class="col-md-4">
         <img id="cover_detail" class="img-fluid" src="{{ book.cover.url }}" alt="">
-        <table>
-          <h5 class="my-2">&nbsp;&nbsp;Votre avis compte.</h5>
-            <tr>
-            </tr>
-            <tr>
-                <td>
-                    <!-- Form for likes -->
-                    <form action="" id="like_dislike" name="theForm" method="POST">
-                        {% csrf_token %}
-                        <!-- <button onclick="document.getElementById('like_dislike').submit();">like {{ form_view_avi.likes }}</button>
-                        <button onclick="document.getElementById('like_dislike').submit();">dislike {{ form_view_avi.dislikes }}</button>  -->
-                        <button class="btn btn-sm" type="submit" onclick="theForm()">
-                            <!-- {{ form_view_avi.likes }} -->
-                            <input aria-describedby="inputGroup-sizing-sm"  style="background-color:rgb(29, 83, 230);color: #fff;border-color: #112025;border-radius: 10px;"
-                                    class="form-control"
-                                    type="submit"
-                                    name="likes"
-                                    value="Like">
-                        </button>
-                        <button class="btn btn-sm" type="submit" onclick="theForm()">
-                            <!-- {{ form_view_avi.dislikes }} -->
-                            <input  style="background-color:#ba2121;color: #fff;border-color: #112025;border-radius: 10px;"
-                                    class="form-control"
-                                    type="submit"
-                                    name="dislikes"
-                                    value="Dislike">
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        </table>
+        <a href="" class="btn btn-success inline desable">like</a>
+        <a href="" class="btn btn-success inline desable">like</a>
       </div>
 
       <div class="col">
@@ -66,13 +37,16 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <font size="2">par &emsp;&emsp;&emsp; : {{ book.owner }}</font>
+              <font size="2">par &emsp;&emsp;&emsp; : <a href="{% url 'bbaut' book.owner 1 %}">{{ book.owner }}</a></font>
             </li>
             <li class="list-group-item">
-              <font size="2">Écrivain &emsp; : {{ book.owner }}</font>
+              <font size="2">Écrivain &emsp; : <a href="{% url 'bbaut' book.owner 1 %}">{{ book.owner }}</a></font>
             </li>
             <li class="list-group-item">
-              <font size="2">Maison &emsp; : {{ book.maison }}</font>
+              <font size="2">Maison &emsp; : <a href="{% url 'bbmais' book.maison 1 %}">{{ book.maison }}</a></font>
+            </li>
+            <li class="list-group-item">
+              <font size="2">Catégorie &emsp; : <a href="{% url 'bbcat' book.categorie 1 %}">{{ book.categorie }}</a></font>
             </li>
             <li class="list-group-item">
               <font size="2">version &emsp; : {{ book.version }} sortie le {{ book.annee }}</font>
