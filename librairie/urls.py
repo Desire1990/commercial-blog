@@ -11,7 +11,8 @@ urlpatterns = [
     path('books_by_annee/<annee>/<page>', views.books_by_annee, name='bban'), 
     path('', views.books, name='library'), 
     path('book/<slug>', views.book, name='book'), 
-    path('add_book', views.ajouter, name='add_book'), 
+    path('add_book/<slug>', views.ajouter, name='add_book'), 
+    path('add_book/', views.ajouter, name='add_book'), 
     path('update_book/<slug>', views.modifier, name='update_book'), 
     path('remove_book/<slug>', views.supprimer, name='remove_book'), 
 ]

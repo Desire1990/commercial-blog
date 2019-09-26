@@ -1,9 +1,11 @@
 from django.shortcuts import *
-from .forms import *
-from .models import *
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login, logout, models
 from django.db.models import Q
+from django.utils.text import slugify
+from django.contrib.auth.decorators import login_required
+from .forms import *
+from .models import *
 
 def connexion(request):
     error = False
@@ -76,13 +78,36 @@ def books_by_annee(request, annee, page):
 def book(request, slug):
     book = Livre.objects.get(slug=slug)
     lasts = Livre.objects.filter(owner=book.owner)[:3]
-    return render(request, "detail.html", locals())
+    return render(request, "library_detail.html", locals())
 
-def ajouter(request):
-    form = BookForm(request.POST or None)
+@login_required(redirect_field_name='login')
+def ajouter(request, slug=None):
+    page = "ADD BOOK"
+    url = 'add_book'
+    if request.method=="POST":
+        form = BookForm(request.POST, request.FILES)
+        book = form.save(commit=False)
+        book.owner = request.user.profil
+        book.slug = slugify(book.titre)
+        book.save()
+        print(book.owner, book.slug)
+        return redirect("library")
+    form = BookForm()
     return render(request, "book_form.html", locals())
 
 def modifier(request, slug):
-    pass
+    page = "UPDATE BOOK"
+    url = 'update_book'
+    book = Livre.objects.get(slug=slug)
+    if request.method=="POST":
+        form = BookForm(request.POST, request.FILES, instance=book)
+        form.save()
+        return redirect("library")
+    form = BookForm(instance=book)
+    return render(request, "book_form.html", locals())
+
 def supprimer(request, slug):
-    pass
+    book = Livre.objects.get(slug=slug)
+    if book.owner.user == request.user:
+        book.delete()
+    return redirect("library")
