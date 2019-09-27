@@ -59,9 +59,13 @@
         </a>
       </li>
     {% endif %}
-    {% for page in pages.page_range %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ forloop.counter }}" >{{ forloop.counter }}</a>
+    {% for i in pages.page_range %}
+      {% if page == i %}
+        <li class="page-item active">
+      {% else %}
+        <li class="page-item">
+      {% endif %}
+        <a class="page-link" href="?page={{ i }}" >{{ forloop.counter }}</a>
       </li>
     {% endfor %}
     {% if page_content.has_next %}

@@ -40,7 +40,7 @@ def book_attrs(books, page):
     except IndexError:
         slide1 = None
         slides = None
-    pages = Paginator(books, 2, orphans=0)
+    pages = Paginator(books, 20, orphans=8)
     page_content = pages.page(page)
     nom_app = "Livres"
     return (nom_app, slide1, slides, pages, page_content)
