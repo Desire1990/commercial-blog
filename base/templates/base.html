@@ -52,9 +52,10 @@
             </div>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {% if user.is_authenticated %}
                 {{ request.user.username }}
+              </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
                 <a class="dropdown-item" href="{% url 'deconnexion' %}">Sign-Out</a>
                   {% block upload %}
@@ -62,12 +63,12 @@
                 </div>
               {% else %}
                 User
+                </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
                 <a class="dropdown-item" href="{% url 'connexion' %}">Sign-In</a>
                 <a class="dropdown-item" href="{% url 'inscription' %}">Register</a>
                 </div>
               {% endif %}
-            </a>
           </li>
         </ul>
       </div>
@@ -85,7 +86,6 @@
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
     </div>
-    <!-- /.container -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->

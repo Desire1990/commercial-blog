@@ -49,47 +49,31 @@
 {% endblock app_content %}
 
 {% block pagination %}
-    {% if filmsPage.has_other_pages %}
+  {% if page_content.has_other_pages %}
   <ul class="pagination justify-content-center">
-    {% if filmsPage.has_previous %}
+    {% if page_content.has_previous %}
       <li class="page-item">
-        <a class="page-link" href="?page={{ users.previous_page_number }}" aria-label="Previous">
+        <a class="page-link" href="?page={{ page_content.previous_page_number }}" aria-label="Next">
           <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
+          <span class="sr-only">Prev</span>
         </a>
       </li>
-    {% else %}
-      <li class="page-item" class="disabled">
-          <span></span>
-      </li>
     {% endif %}
-    {% for i in filmsPage.paginator.page_range %}
-      {% if filmsPage.number == i %}
-        <li class="page-item" class="active">
-          <a class="page-link">
-            <span>{{ i }} <span class="sr-only">(current)</span></span>
-          </a>
-        </li>
-      {% else %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-        </li>
-      {% endif %}
-    {% endfor %}
-    {% if filmsPage.has_next %}
+    {% for page in pages.page_range %}
       <li class="page-item">
-        <a class="page-link" href="?page={{ users.next_page_number }}" aria-label="Next">
+        <a class="page-link" href="?page={{ forloop.counter }}" >{{ forloop.counter }}</a>
+      </li>
+    {% endfor %}
+    {% if page_content.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_content.next_page_number }}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
           <span class="sr-only">Next</span>
         </a>
       </li>
-    {% else %}
-      <li class="page-item" class="disabled">
-        <span></span>
-      </li>
     {% endif %}
-  </ul>
   {% endif %}
+  </ul>
   
 {% endblock pagination %}
 
@@ -100,7 +84,7 @@
       <p></p>
       </div>
       <div class="col-md-4">
-      <a class="btn btn-lg btn-secondary btn-block" href="#">Retour vers le haut</a>
+      <a class="btn btn-sm btn-secondary btn-block" href="#">Retour vers le haut</a>
       </div>
       </div>
     {% endblock %}

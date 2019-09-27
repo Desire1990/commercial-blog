@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from .models import *
+from django.utils.datastructures import MultiValueDictKeyError
 
 def connexion(request):
     error = False
@@ -39,42 +40,61 @@ def book_attrs(books, page):
     except IndexError:
         slide1 = None
         slides = None
-    pages = Paginator(books, 20, orphans=8)
+    pages = Paginator(books, 2, orphans=0)
     page_content = pages.page(page)
-    pagination = pages.page_range
     nom_app = "Livres"
-    return (nom_app, slide1, slides, pages, page_content, pagination)
+    return (nom_app, slide1, slides, pages, page_content)
 
-def books(request, page=1):
+def books(request):
+    try:
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
     books = Livre.objects.all()
     accueil = True
-    nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    nom_app, slide1, slides, pages, page_content = book_attrs(books, page)
     return render(request, "library_content.html", locals())
 
-def books_by_auteur(request, auteur, page):
+def books_by_auteur(request, auteur):
+    try:
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
     auteur = User.objects.get(username=auteur)
     books = Livre.objects.filter(owner=auteur.profil)
     accueil = False
-    nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    nom_app, slide1, slides, pages, page_content = book_attrs(books, page)
     return render(request, "library_content.html", locals())
     
-def books_by_maison(request, maison, page):
+def books_by_maison(request, maison):
+    try:
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
     books = Livre.objects.filter(maison = maison)
     accueil = False
-    nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    nom_app, slide1, slides, pages, page_content = book_attrs(books, page)
     return render(request, "library_content.html", locals())
     
-def books_by_categorie(request, categorie, page):
+def books_by_categorie(request, categorie):
+    try:
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
     categorie = Categorie.objects.get(categorie=categorie)
     books = Livre.objects.filter(categorie=categorie)
     accueil = False
-    nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    nom_app, slide1, slides, pages, page_content = book_attrs(books, page)
     return render(request, "library_content.html", locals())
     
-def books_by_annee(request, annee, page):
+def books_by_annee(request, annee):
+    try:
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
     books = Livre.objects.filter(annee=annee)
     accueil = False
-    nom_app, slide1, slides, pages, page_content, pagination = book_attrs(books, page)
+    nom_app, slide1, slides, pages, page_content = book_attrs(books, page)
     return render(request, "library_content.html", locals())
 
 def book(request, slug):
