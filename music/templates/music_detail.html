@@ -85,10 +85,10 @@
             {% if music.owner != user %}
             <li class="list-group-item">
               <form class="" action="index.html" method="post">
-                <a href="#" class="btn btn-primary">Téléchargement Gratuit</a>
-                <a id="telechargerA" href="#" class="btn btn-success mr-5">Télécharger Payant</a>
-                <a id="telechargerB" href="#" class="btn btn-success">Validation</a>
-                <a id="telechargerC" href="#" class="btn btn-success">Télécharger</a>
+                <a id="telechargerA" href="#" class="btn btn-success float-left">Acheter</a>
+                <a id="telechargerB" href="#" class="btn btn-success ">Validation</a>
+                <a id="telechargerC" href="#" class="btn btn-success m">Télécharger</a>
+                <a id="telechargerB" href="{% url 'music_player' music.slug %}" class="btn btn-success float-right">Play Now</a>
                 <input class="form-control" style ="margin-top: 5px;" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
               </form>
             </li>
