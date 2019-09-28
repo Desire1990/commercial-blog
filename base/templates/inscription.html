@@ -13,6 +13,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title text-center">Register</h5>
+            <form method="post" enctype="multipart/form-data" action="." class="form-signin">
               {% csrf_token %}
               {{ form.as_p }}
               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
