@@ -45,13 +45,24 @@ def acceuil_app(request):
 def details_app( request, slug ):
     page_title = "Movie details" 
     page_content = Film.objects.get( slug = slug )
-    comm_obj = Commentaires.objects.filter( titre = page_content )
+    comm_obj = Commentaires.objects.filter(titre = page_content)
     associated_movies = Film.objects.filter( acteur = page_content.acteur ).order_by('date')
     check_thumbs    = Avis.objects.filter( slug_key = slug )
     associated_movies = associated_movies[0:3]
     all_likes = Avis.objects.filter(Q( likes = True ) & Q( slug_key = slug )).count()
     all_dislikes = Avis.objects.filter(Q( dislikes = True ) & Q( slug_key = slug )).count()
 
+    page = request.GET.get('page', 1)           # page à charger par defaut
+    paginator = Paginator(comm_obj, 24)         # limiter tous les elements à afficher
+
+    try:
+        filmsPage = paginator.page(page)
+    except PageNotAnInteger:
+        filmsPage = paginator.page(1)
+    except EmptyPage:
+        filmsPage = paginator.page(paginator.num_pages)
+
+    # Dealing with the coments form
     form_view_comm = CommentaireForm( request.POST or None )
     if request.method == "POST":
         if form_view_comm.is_valid():
@@ -59,15 +70,18 @@ def details_app( request, slug ):
             # titr = form_view_comm.cleaned_data['titre']
             com = form_view_comm.cleaned_data['commentaire']
             Commentaires( user = current_user, titre = page_content, commentaire = com ).save()
-            msg = "Enregistrer avec success !!!"
-            form_view_comm = Commentaires()
+            
             all_likes    = Avis.objects.filter(Q( likes = True ) & Q( slug_key = slug ) ).count()
             all_dislikes = Avis.objects.filter(Q( dislikes = True ) & Q( slug_key = slug )).count()
-
+        
+    # Dealing with the likes form
     form_view_avi = LikeForm( request.POST or None )
 
-    current_user    = request.user
-    current_email   = request.user.email
+    if request.user.is_authenticated:
+        current_user = request.user
+        current_email = request.user.email
+    else:
+        current_user = request.user
 
     if request.method == "POST":
         if form_view_avi.is_valid():
@@ -75,8 +89,10 @@ def details_app( request, slug ):
             dislike      = form_view_avi.cleaned_data['dislikes']
             Avis( user = current_user,u_email = current_email, slug_key = slug, likes = like, dislikes = dislike ).save()
             all_likes    = Avis.objects.filter(  Q( likes = True ) & Q( slug_key = slug ) ).count()
-            all_dislikes = Avis.objects.filter( Q( dislikes = True ) & Q( slug_key = slug ) ).count()
-    
+            all_dislikes = Avis.objects.filter(Q(dislikes=True) & Q(slug_key=slug)).count()
+            
+    form_view_avi = LikeForm()
+    form_view_comm = CommentaireForm()
     return render( request, 'movies_detail.html', locals() )
 
 def ajout_app( request ):
@@ -101,7 +117,8 @@ def ajout_app( request ):
             Film(user = currentuser,titre = titre,acteur = acteur,description = description,language = language,resolution = resolution,cover = cover,film = film,prix = prix,realisateur = realisateur,studio = studio ).save()
             nombre_film = Film.objects.all().count()
             
-            msg = "Enregistrer avec success !!!"
+            msg = "Saved"
+        form = FilmForm()
         return redirect( acceuil_app )
     return render( request, 'movies_form.html', locals() )
     

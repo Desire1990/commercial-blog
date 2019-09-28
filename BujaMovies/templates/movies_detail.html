@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static from staticfiles %}
 
 {% block title %} {{ page_title }} {% endblock %}
 
@@ -68,8 +69,8 @@
         <div class="card h-100">
           <h5 class="card-header"> {{ page_content }}[{{ page_content.resolution }}] <br> Seulement à <i>{{ page_content.prix }}</i> FBU</h5>
           <div class="card-body">
-            <div class="display-5"><p>Description</p></div>
-            <div class="font-italic">{{ page_content.description }}</div>
+            <div title="{{ page_content.description }}" class="display-5"><p>Description</p></div>
+            <div id="decription_italic" class="font-italic">{{ page_content.description }}</div>
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -79,14 +80,14 @@
               <font size="2">Réalisateur &emsp; : {{ page_content.realisateur }}</font>
             </li>
             <li class="list-group-item">
-              <font size="2">Studio &emsp;&emsp;&emsp; : {{ page_content.studio }} <br>
-                Sortie en &emsp;&emsp; : {{ page_content.date|date:"Y" }} <br>
-                Ajouté par&emsp;&emsp;: {{ page_content.user }}
+              <font size="2">Studio &emsp;&emsp;&emsp;: {{ page_content.studio }} <br>
+                Sortie en&emsp;&emsp;: {{ page_content.date|date:"Y" }} <br>
+                Publié par &emsp; : {{ page_content.user }}
               </font>
             </li>
             <li class="list-group-item">
               <form class="" action="index.html" method="post">
-                <a href="#" class="btn btn-primary">Téléchargement Gratuit</a>
+                <a id="gratuit" href="{{ page_content.film.url }}" class="btn btn-primary">Téléchargement Gratuit</a>
                 <a id="acheter" href="#" class="btn btn-success">Télécharger Payant</a>
                 <a id="valider" href="#" class="btn btn-success">Validation</a>
                 <a id="telecharger" href="#" class="btn btn-success">Télécharger</a>
@@ -98,26 +99,44 @@
       </div>
 
     </div>
+
+    <div class="row">
+      
+    </div>
     <!-- /.row -->
     <div class="row">
 
-      <div class="col-lg-8 mb-4">
+      <div style="overflow: scroll;height:500px;" class="col-lg-7 mb-4">
         {% if request.user.is_authenticated %}
-        <h3>Lire les commentaires.</h3>
+        <h3 class="lire mt-3">Lire les commentaires.</h3>
         <table>
             {% for com_list in comm_obj %}
             <tr>
               <td>
-                
-                  <i><b>{{ com_list.user }}</b>
+                {% if com_list.commentaire %}
+                  <i><b style="text-shadow: 6px 6px 6px rgb(122, 112, 112)">{{ com_list.user }}</b>
                     <font size = "1">, le {{ com_list.date }}</font>
-                    <br>&emsp;&emsp;{{ com_list.commentaire }}</i>
+                    <br>&emsp;&emsp;{{ com_list.commentaire }}
+                  </i>
+                  {% else %}
+                  <font size = "1">No comment available</font>
+                  {% endif %}
               </td>
             </tr>
             {% endfor %}
         </table>
         {% endif %}
+      
       </div>
+      <div id="my_video_div" class="col-lg-5 col-md-12 my-2">
+        <video id="my_video" src="{{ page_content.film.url }}" alt="" controls poster="">
+            <!-- <sourcesrc=" {{ page_content.film.url.mp4 }}"/>
+            <sourcesrc=" {{ page_content.film.url }}.webm"/>
+            <sourcesrc=" {{ page_content.film.url }}.ogv"/> -->
+        </video>
+      </div>
+      
+
 
       <!-- Comment Form -->
       <div class="col-lg-8 mb-4">
@@ -138,8 +157,8 @@
 
     </div>
 <!-- Related Projects Row -->
-<h3 class="my-4">Recherches associées:
-  <h4><small>Ses nouveautés</small></h4>
+<h3 id="recherche_assoc" class="my-4">Recherches associées:
+  <h4 id="recherche_assoc"><small>Ses nouveautés</small></h4>
 </h3>
 <div class="row">
   {% for assoc in associated_movies %}
