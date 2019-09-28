@@ -1,4 +1,5 @@
 {% extends "home.html" %}
+{% load static %}
 {% block upload %}
   <a class="dropdown-item" href="{% url 'upload_music' %}">upload a music</a>
 {% endblock %}
@@ -21,24 +22,26 @@
     <div class="row">
       {% for element in page_content %}
       <div class="col-lg-3 col-md-4 col-sm-6 detail_element ">
-        <div class="card h-100">
+        <div class="card h-80">
           <a href="{% url 'about_music' element.slug %}"><img id="img" class="card-img-top" width="208px" height="208px" src="{{ element.cover.url }}" alt="{{ element.titre }}" ></a>
           <div class="card-body">
             <div>
               <h4 class="card-title" >
                 <a id="titre_sm" href="{% url 'about_music' element.slug %}" >{{ element.titre }}</a>
-              </h4>
-            </div >
-            <p id="acteur_sm" class="card-text">{{ element.owner }}</p>        
+              
+            </div>
+            <p id="acteur_sm" class="card-text">{{ element.owner }}</p> 
+            <div class="d-flex justify-content-around">
             {% if element.owner.user == user %}
-              <a class="btn btn-sm btn-info mb-2 " href="{% url 'update_music' element.id %}">Modifier</a>
-              <a class="btn btn-sm btn-danger float-right" href="{% url 'delete_music' element.slug %}">Supprimer</a>
-              <a class="btn btn-sm btn-success " href="{% url 'music_player' element.slug %}">PlayNow</a>
-              <a class="btn btn-sm btn-warning float-right" href="{{ element.audio.url }}" download>Download</a>
+              <a class="btn btn-sm btn-outline-info" href="{% url 'update_music' element.id %}"><img style="width:30px; height:30px;" src="{% static 'iconsMusic/Edit2.png' %}"></a>
+              <a class="btn btn-sm btn-outline-danger " href="{% url 'delete_music' element.slug %}"><img style="width:30px; height:30px;" src="{% static 'iconsMusic/Delete2.png' %}"></a>
+              <a class="btn btn-sm btn-outline-success " href="{% url 'music_player' element.slug %}"><img style="width:30px; height:30px;" src="{% static 'iconsMusic/Play2.png' %}"></a>
+              <a class="btn btn-sm btn-outline-warning " href="{{ element.audio.url }}" download><img style="width:30px; height:30px;" src="{% static 'iconsMusic/Download2.png' %}"></a>
             {% else %}
-                <a class="btn btn-sm btn-success " href="{% url 'music_player' element.slug %}">PlayNow</a>
-                <a class="btn btn-sm btn-warning float-right" href="{% url 'about_music' element.slug %}" >Acheter</a>
+                <a class="btn btn-sm btn-outline-success " href="{% url 'music_player' element.slug %}"><img style="width:30px; height:30px;" src="{% static 'iconsMusic/Play2.png' %}"></a>
+                <a class="btn btn-sm btn-outline-warning " href="{% url 'about_music' element.slug %}" ><img style="width:30px; height:30px;" src="{% static 'iconsMusic/Buy2.png' %}"></a>
             {% endif %}
+            </div>
             
           </div>
         </div>
