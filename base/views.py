@@ -8,17 +8,20 @@ from music.models import Music
 from .forms import *
 
 def inscription(request):
-	form = InscriptionForm(request.POST or None)
-	if request.method == "POST" and form.is_valid():
-		username = form.cleaned_data['username']
-		password = form.cleaned_data['password']
-		password2 = form.cleaned_data['password2']
-		email = form.cleaned_data['email']
-		avatar = form.cleaned_data['avatar']
-		print(locals)
-		if password==password2:
-			user = User.objects.create_user(username=username, email=email, password=password)
-			Profil(user=user, avatar=avatar).save()
+	if request.method == "POST" :
+		form = InscriptionForm(request.POST, request.FILES)
+		if form.is_valid():
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password']
+			password2 = form.cleaned_data['password2']
+			email = form.cleaned_data['email']
+			avatar = form.cleaned_data['avatar']
+			if password==password2:
+				user = User.objects.create_user(
+					username=username, 
+					email=email, 
+					password=password)
+				Profil(user=user, avatar=avatar).save()
 		if user:
 			login(request, user)
 			return redirect(index)

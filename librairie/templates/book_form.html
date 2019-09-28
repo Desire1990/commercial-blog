@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %} {{ inscription }} {% endblock %}
+{% block title %} {{ page }} {% endblock %}
 
 {% block content %}
 <body>
@@ -12,12 +13,11 @@
              <!-- Background image for card set in CSS! -->
           </div>
           <div class="card-body">
-            <h5 class="card-title text-center">Upload form</h5>
-            <form method="post" action="." class="form-signin">
+            <h5 class="card-title text-center">{{ page }}</h5>
+            <form method="post" enctype="multipart/form-data" action="{% url url slug %}">
               {% csrf_token %}
               {{ form.as_p }}
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Upload</button>
-              <a class="d-block text-center mt-2 small" href="{% url 'connexion' %}">Sign In</a>
+              <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="{{ page }}" name="{{ page }}" />
             </form>
           </div>
         </div>

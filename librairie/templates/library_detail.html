@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %} "details" {% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+<!-- Page Heading/Breadcrumbs -->
+<!-- <h1 class="mt-4 mb-3">Bienvenue à
+  <small>BujaMovies</small>
+  <p id="ok">OK</p>
+</h1> -->
+<br>
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'library' %}">Library' home</a>
+  </li>
+  <li class="breadcrumb-item active">Details</li>
+</ol>
+
+    <!-- Portfolio Item Row -->
+    <div class="row">
+
+      <div id="cover_back" class="col-md-4">
+        <img id="cover_detail" class="img-fluid" src="{{ book.cover.url }}" alt="">
+        <a href="{% url 'like' book.slug 1 %}" class="btn btn-link inline">
+          {% if like_value == "1" %}
+            liked
+          {% else %}
+            like
+          {% endif %}
+        </a>
+        <a href="{% url 'like' book.slug 2 %}" class="btn btn-link inline">
+          {% if like_value == "2" %}
+            disliked
+          {% else %}
+            dislike
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="col">
+        <div class="card h-100">
+          <h5 class="card-header"> {{ book.titre }}[200 pages]</h5>
+          <div class="card-body">
+            <div class="display-5"><p>Description du contenue selectionné</p></div>
+            <div class="font-italic">{{ book.details }}</div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <font size="2">par &emsp;&emsp;&emsp; : <a href="{% url 'bbaut' book.owner %}">{{ book.owner }}</a></font>
+            </li>
+            <li class="list-group-item">
+              <font size="2">Écrivain &emsp; : <a href="{% url 'bbaut' book.owner %}">{{ book.owner }}</a></font>
+            </li>
+            <li class="list-group-item">
+              <font size="2">Maison &emsp; : <a href="{% url 'bbmais' book.maison %}">{{ book.maison }}</a></font>
+            </li>
+            <li class="list-group-item">
+              <font size="2">Catégorie &emsp; : <a href="{% url 'bbcat' book.categorie %}">{{ book.categorie }}</a></font>
+            </li>
+            <li class="list-group-item">
+              <font size="2">version &emsp; : {{ book.version }} sortie le {{ book.annee }}</font>
+            </li>
+            <li class="list-group-item">
+              <font size="2">Prix &emsp;&emsp;&emsp; : {{ book.prix }}</font>
+            </li>
+            <li class="list-group-item">
+              <form class="" action="index.html" method="post">
+                <a href="#" class="btn btn-primary">Téléchargement Gratuit</a>
+                <a id="acheter" href="#" class="btn btn-success">acheter</a>
+                <a id="valider" href="#" class="btn btn-success">valider</a>
+                <a id="telecharger" href="#" class="btn btn-success">Télécharger</a>
+                <input class="form-control" style ="margin-top: 5px;" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Recherches associées:
+      <h4><small>Ses nouveautés</small></h4>
+    </h3>
+
+
+    <div class="row">
+
+      {% for book in lasts %}
+        
+      <div class="col-lg-2 col-sm-3 col-4 detail_element mb-3">
+        <div class="card h-100">
+          <a class="h100" href="{% url "book" book.slug %}">
+            <img class="card-img-top" height="100px" src={{ book.cover.url }} alt="">
+            <small>{{ book.titre }}</small>
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+    <!-- /.row -->
+
+  {% endblock %}

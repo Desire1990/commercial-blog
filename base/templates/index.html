@@ -57,11 +57,13 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {% if user.is_authenticated %}
                 {{ request.user.username }}
+              </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
                 <a class="dropdown-item" href="{% url 'deconnexion' %}">Sign-Out</a>
                 </div>
               {% else %}
                 User
+              </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
                 <a class="dropdown-item" href="{% url 'connexion' %}">Sign-In</a>
                 <a class="dropdown-item" href="{% url 'inscription' %}">Sign-Up</a>

@@ -15,6 +15,17 @@ class Commentaire(models.Model):
     class Meta:
         verbose_name = "avis des lecteurs"
 
+class Like(models.Model):
+    who = models.ForeignKey("base.Profil", null=True, on_delete=models.SET_NULL)
+    what = models.ForeignKey("Livre", on_delete=models.CASCADE)
+    like = models.ImageField(max_length=1, default=0)
+
+    class Meta:
+        unique_together = ("who","what")
+    
+    def __str__(self):
+        return f"{self.who} => {self.what} : {self.like}"
+
 class Categorie(models.Model):
     categorie = models.CharField(max_length=30)
 
@@ -53,7 +64,7 @@ class Contribution(models.Model):
         return f"{self.livre} - {self.contributeur}"
     
 class Livre(models.Model):
-    owner = models.OneToOneField("base.Profil", null=True, related_name="auteur", on_delete=models.SET_NULL)
+    owner = models.ForeignKey("base.Profil", null=True, related_name="auteur", on_delete=models.SET_NULL)
     maison = models.CharField(max_length=30, verbose_name="maison d'edition")
     titre = models.CharField(max_length=30, verbose_name="titre du livre")
     categorie = models.ForeignKey("Categorie", null=True, on_delete=models.SET_NULL)

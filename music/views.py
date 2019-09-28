@@ -4,6 +4,7 @@ from .forms import *
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout, models
+from django.utils.datastructures import MultiValueDictKeyError
 
 # Create your views here.
 
@@ -14,11 +15,10 @@ def music_attrs(elements, page):
     except IndexError:
         slide1 = None
         slides = None
-    pages = Paginator(elements, 20, orphans=8)
+    pages = Paginator(elements, 2, orphans=0)
     page_content = pages.page(page)
-    pagination = pages.page_range
     nom_app = "Musiques"
-    return (nom_app, slide1, slides, pages, page_content, pagination)
+    return (nom_app, slide1, slides, pages, page_content)
 
 def delete_music_view(request, slug):
     umuziki = Music.objects.get(slug=slug)
@@ -38,10 +38,13 @@ def update_music_view(request, id):
     return render(request, 'update_music.html', {'form': form})
 
 def musicList_view(request):
+    try:
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
     musics = Music.objects.all()
     accueil = True
-    nom_app, slide1, slides, pages, page_content, pagination \
-        = music_attrs(musics, 1)
+    nom_app, slide1, slides, pages, page_content = music_attrs(musics, page)
     return render(request, 'music_content.html', locals())
 
 def payement_view(request, slug=None):

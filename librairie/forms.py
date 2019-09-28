@@ -15,12 +15,17 @@ class CommentaireForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
 	titre = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'Titre ','class':'form-control'}))
 	description = forms.CharField( widget = forms.Textarea( attrs = {'placeholder':'Description ','class':'form-control','rows':3,'cols':40} ))
-	categorie = forms.ChoiceField( widget = forms.Select( attrs = {'placeholder':'categorie ','class':'form-control','rows':3,'cols':40} ))
-	maison = forms.CharField( widget = forms.TextInput( attrs = {'placeholder':'maison ','class':'form-control','rows':3,'cols':40} ))
+	categorie = forms.ModelChoiceField( 
+		widget = forms.Select( 
+			attrs = {'placeholder':'categorie ','class':'form-control'}
+			),
+		queryset=Categorie.objects.all()
+		)
+	maison = forms.CharField( widget = forms.TextInput( attrs = {'placeholder':'maison ','class':'form-control'} ))
 	prix = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'prix ','class':'form-control'}))
 	version = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'version ','class':'form-control'}))
-	cover = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'photo de couverture ','class':'form-control-file'}), label='Cover')
-	livre = forms.FileField( widget=forms.FileInput(attrs={'class':'form-control-file'}))
+	cover = forms.ImageField( widget=forms.ClearableFileInput(attrs={'class':'form-control-file'}))
+	livre = forms.FileField( widget=forms.ClearableFileInput(attrs={'class':'form-control-file'}))
 	class Meta:
 		model = Livre
 		fields = ("titre", "description", "maison", "categorie", 
