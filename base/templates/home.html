@@ -15,14 +15,14 @@
 
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item active" style="background-image: url('{{ slide1.cover.url }}')">
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption text-dark d-none d-md-block">
             <h3>{{ slide1.titre }}</h3>
             <p>{{ slide1.description|truncatewords:10 }}</p>
           </div>
         </div>
         {%  for slide in slides %}
           <div class="carousel-item" style="background-image: url('{{ slide.cover.url }}')">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption text-dark d-none d-md-block">
               <h3>{{ slide.titre }}</h3>
             <p>{{ slide1.description|truncatewords:10 }}</p>
             </div>

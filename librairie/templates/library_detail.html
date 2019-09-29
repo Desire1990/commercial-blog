@@ -59,16 +59,18 @@
       </div> 
       <div class="list-group-item">
         <div class="row">
+          {% if user.is_authenticated %}
           <div class="col-lg-6 col-sm-12 mb-2">
-            <a href="#" class="btn btn-primary btn-sm col-12">
+            <a href="{{ book.thumbnail.url }}" class="btn btn-primary btn-sm col-12" download>
             Télécharger</a>
           </div>
+          {% endif %}
           <div class="col-sm-12 col-lg-6">
             <a id="acheter" href="#" class="btn btn-success btn-sm col-12">acheter</a>
             <a id="valider" href="#" class="btn btn-success btn-sm col-12">valider</a>
             <a id="telecharger" href="#" class="btn btn-success btn-sm col-12">Télécharger</a>
           </div>
-          <input class="form-control col-md-12 m-2" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
+          <input class="form-control col-md-12 mr-4 mt-2" id="inputid" required type="text" placeholder="Numéro de comfirmation"/>
         </div>
       </div> 
     </div>
