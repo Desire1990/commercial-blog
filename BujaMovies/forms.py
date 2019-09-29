@@ -43,8 +43,8 @@ class FilmForm(forms.ModelForm):
     description = forms.CharField( widget = forms.Textarea( attrs = {'placeholder':'Description ','class':'form-control','rows':3,'cols':40} ), label='')
     language    = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'Language ','class':'form-control'}), label='')
     resolution  = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'Resolution ','class':'form-control'}), label='')
-    cover       = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Affiche ','class':'form-control-file','class':'form-control'}), label='Cover')
-    film        = forms.FileField( widget=forms.FileInput(attrs={'placeholder':'Film ','class':'form-control-file','class':'form-control'}), label='Film')
+    cover       = forms.FileField( widget=forms.ClearableFileInput(attrs={'placeholder':'Affiche ','class':'form-control-file','class':'form-control'}), label='Cover')
+    film        = forms.FileField( widget=forms.ClearableFileInput(attrs={'placeholder':'Film ','class':'form-control-file','class':'form-control'}), label='Film')
     prix        = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Prix ', 'class': 'form-control'}), label='')
     class Meta:
         model = Film

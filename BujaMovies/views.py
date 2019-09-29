@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from base.views import connexion
 
 # def movies_attrs( movies, page ):
 #     try:
@@ -23,22 +24,22 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
     
 
 
-def acceuil_app(request):
+def acceuil_app( request ):
     nom_app = "Movies"
     page_title = "Movies" 
     accueil    = True
     film_obj = Film.objects.all().order_by('date')
     slide1=film_obj[0]
     # film_obj=film_obj[1:3]
-    page = request.GET.get('page', 1)           # page à charger par defaut
-    paginator = Paginator(film_obj, 24)         # limiter tous les elements à afficher
+    page = request.GET.get( 'page', 1 )           # page à charger par defaut
+    paginator = Paginator( film_obj, 24 )         # limiter tous les elements à afficher
 
     try:
-        filmsPage = paginator.page(page)
+        filmsPage = paginator.page( page )
     except PageNotAnInteger:
-        filmsPage = paginator.page(1)
+        filmsPage = paginator.page( 1 )
     except EmptyPage:
-        filmsPage = paginator.page(paginator.num_pages)
+        filmsPage = paginator.page( paginator.num_pages )
 
     return render( request, 'movies_content.html', locals() )
 
@@ -52,15 +53,15 @@ def details_app( request, slug ):
     all_likes = Avis.objects.filter(Q( likes = True ) & Q( slug_key = slug )).count()
     all_dislikes = Avis.objects.filter(Q( dislikes = True ) & Q( slug_key = slug )).count()
 
-    page = request.GET.get('page', 1)           # page à charger par defaut
-    paginator = Paginator(comm_obj, 24)         # limiter tous les elements à afficher
+    page = request.GET.get( 'page', 1 )           # page à charger par defaut
+    paginator = Paginator( comm_obj, 24 )         # limiter tous les elements à afficher
 
     try:
-        filmsPage = paginator.page(page)
+        filmsPage = paginator.page( page )
     except PageNotAnInteger:
-        filmsPage = paginator.page(1)
+        filmsPage = paginator.page( 1 )
     except EmptyPage:
-        filmsPage = paginator.page(paginator.num_pages)
+        filmsPage = paginator.page( paginator.num_pages )
 
     # Dealing with the coments form
     form_view_comm = CommentaireForm( request.POST or None )
@@ -122,12 +123,17 @@ def ajout_app( request ):
         return redirect( acceuil_app )
     return render( request, 'movies_form.html', locals() )
     
-def update_app(request, id):
+def update_app( request, id ):
+    selected_movie = get_object_or_404( Film, pk = id)
+    
     if not request.user.is_authenticated:
-        return redirect(movies)
+        return redirect( connexion )
+
+    elif selected_movie.user != request.user:
+        return redirect( acceuil_app )
+
     else:
-        page_title      = "Update movie" 
-        selected_movie = get_object_or_404(Film, pk = id)
+        page_title = "Update movie" 
         
         if request.method == 'POST':
             form = FilmForm( request.POST or None, request.FILES or None, instance = selected_movie )
@@ -152,40 +158,23 @@ def update_app(request, id):
                     'film'          : selected_movie.film.url,
                     }
 
-            form = FilmForm( initial = data)
-    
+            form = FilmForm( initial = data )
 
     return render( request, 'update_movies_form.html', locals() )
 
 def delete_app( request, slug ):
-    page_title     = "Delete movie" 
     selected_movie = get_object_or_404( Film, slug = slug )
-    if request.method == "POST":
-        selected_movie.delete()
-        return redirect( '../../movies' )
-    return render( request, 'delete_movies.html', locals() )
-
-
-
-
-    # selected_movie  = get_object_or_404( Film, slug = slug )
-
-    # data = {'id'            : selected_movie.id,
-    #         'user'          : selected_movie.user,
-    #         'slug'          : selected_movie.slug,
-    #         'titre'         : selected_movie.titre,
-    #         'acteur'        : selected_movie.acteur,
-    #         'description'   : selected_movie.description,
-    #         'language'      : selected_movie.language,
-    #         'resolution'    : selected_movie.resolution,
-    #         'studio'        : selected_movie.studio,
-    #         'prix'          : selected_movie.prix,
-    #         'realisateur'   : selected_movie.realisateur,
-    #         'date'          : selected_movie.date,
-    #         'cover'         : selected_movie.cover.url,
-    #         'film'          : selected_movie.film.url,
-    #         }
+    get_user = User.objects.all()
+    if not request.user.is_authenticated:
+        return redirect( connexion )
     
-    # form = FilmForm( initial = data )
-    # if form.is_valid():
-    #     form.save()
+    elif selected_movie.user != request.user:
+        return redirect( connexion )
+
+    else:
+        page_title     = "Delete movie" 
+        if request.method == "POST":
+            selected_movie.delete()
+            return redirect('../../movies')
+        
+    return render( request, 'delete_movies.html', locals() )
