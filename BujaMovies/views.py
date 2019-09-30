@@ -8,19 +8,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from base.views import connexion
+from django.utils.datastructures import MultiValueDictKeyError
 
-# def movies_attrs( movies, page ):
-#     try:
-#         slide1 = movies[0]
-#         slides = movies[1:3]
-#     except IndexError:
-#         slide1 = None
-#         slides = None
-#     pages = Paginator( movies, 10, orphans = 8 )
-#     page_content = pages.page( page )
-#     pagination = pages.page_range
-#     nom_app = "Movies\' Home"
-#     return (nom_app, slide1, slides, pages, page_content, pagination)
+def movies_attrs( movies, page ):
+    try:
+        slide1 = movies[0]
+        slides = movies[1:3]
+    except IndexError:
+        slide1 = None
+        slides = None
+    pages = Paginator( movies, 10, orphans = 8 )
+    page_content = pages.page( page )
+    pagination = pages.page_range
+    nom_app = "Movies\' Home"
+    return (nom_app, slide1, slides, pages, page_content)
     
 
 
@@ -29,18 +30,11 @@ def acceuil_app( request ):
     page_title = "Movies" 
     accueil    = True
     film_obj = Film.objects.all().order_by('date')
-    slide1=film_obj[0]
-    # film_obj=film_obj[1:3]
-    page = request.GET.get( 'page', 1 )           # page à charger par defaut
-    paginator = Paginator( film_obj, 24 )         # limiter tous les elements à afficher
-
     try:
-        filmsPage = paginator.page( page )
-    except PageNotAnInteger:
-        filmsPage = paginator.page( 1 )
-    except EmptyPage:
-        filmsPage = paginator.page( paginator.num_pages )
-
+        page = int(request.GET["page"])
+    except MultiValueDictKeyError:
+        page=1
+    nom_app, slide1, slides, pages, page_content = movies_attrs(film_obj, page)
     return render( request, 'movies_content.html', locals() )
 
 def details_app( request, slug ):
