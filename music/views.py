@@ -3,6 +3,7 @@ from .models import *
 from .forms import *
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout, models
 from django.utils.datastructures import MultiValueDictKeyError
 
@@ -20,19 +21,21 @@ def music_attrs(elements, page):
     nom_app = "Musiques"
     return (nom_app, slide1, slides, pages, page_content)
 
+@login_required(login_url='/connexion/')
 def delete_music_view(request, slug):
     umuziki = Music.objects.get(slug=slug)
     if request.user == umuziki.owner.user:
         umuziki.delete()
     return redirect('music')
 
+@login_required(login_url='/connexion/')
 def update_music_view(request, id):
     music_id = Music.objects.get(id=id)
     if request.method == 'POST':
         form = MusicForm(request.POST, request.FILES, instance = music_id)
         if form.is_valid():
             form.save()
-            return redirect('music')
+        return redirect('music')
     else:
         form = MusicForm(instance= music_id)
     return render(request, 'update_music.html', {'form': form})
