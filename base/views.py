@@ -30,14 +30,20 @@ def inscription(request):
 
 def connexion(request):
 	formulaire = ConnexionForm(request.POST)
+	try:
+		next_p = request.GET["next"]
+	except:
+		next_p = ""
 	if request.method == "POST" and formulaire.is_valid():
 		username = formulaire.cleaned_data['username']
 		password = formulaire.cleaned_data['password']
-		print(username, password)
-		user = authenticate(username = username, password = password)
+		user = authenticate(username=username, password=password)
 		if user:  # Si l'objet renvoyé n'est pas None
 			login(request, user)
-			return redirect(index)
+			if next_p:
+				return redirect(next_p)
+			else:
+				return redirect(index)
 	formulaire = ConnexionForm()
 	return render(request, 'sign-in.html', locals())
 

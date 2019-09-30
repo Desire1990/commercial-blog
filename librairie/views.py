@@ -40,7 +40,7 @@ def book_attrs(books, page):
     except IndexError:
         slide1 = None
         slides = None
-    pages = Paginator(books, 2, orphans=0)
+    pages = Paginator(books, 20, orphans=8)
     page_content = pages.page(page)
     nom_app = "Livres"
     return (nom_app, slide1, slides, pages, page_content)
@@ -107,7 +107,7 @@ def book(request, slug):
         like_value = 0
     return render(request, "library_detail.html", locals())
 
-@login_required(redirect_field_name='login')
+@login_required#(redirect_field_name='login')
 def ajouter(request, slug=None):
     page = "ADD BOOK"
     url = 'add_book'
@@ -122,15 +122,19 @@ def ajouter(request, slug=None):
     form = BookForm()
     return render(request, "book_form.html", locals())
 
+@login_required
 def modifier(request, slug):
     page = "UPDATE BOOK"
     url = 'update_book'
     book = Livre.objects.get(slug=slug)
-    if request.method=="POST":
-        form = BookForm(request.POST, request.FILES, instance=book)
-        form.save()
-        return redirect("library")
-    form = BookForm(instance=book)
+    if request.user.profil == book.owner:
+        if request.method=="POST":
+            form = BookForm(request.POST, request.FILES, instance=book)
+            form.save()
+            return redirect("library")
+        form = BookForm(instance=book)
+    else:
+        return redirect(books)
     return render(request, "book_form.html", locals())
 
 def supprimer(request, slug):
@@ -139,7 +143,7 @@ def supprimer(request, slug):
         book.delete()
     return redirect("library")
 
-@login_required(redirect_field_name='login')
+@login_required#(redirect_field_name='login')
 def like(request, slug, new_value):
     book = Livre.objects.get(slug=slug)
     try:

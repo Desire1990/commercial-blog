@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+{% if user.is_authenticated %}
+  <h3><small>you are connected as</small> {{user.username}}</h3>
+{% endif %}
 <div class="container-fluid" >
   <div class="row no-gutter">
     <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -11,7 +13,7 @@
           <div class="row">
             <div class="col-md-9 col-lg-8 mx-auto float-left">
               <h3 class="login-heading mb-4">Welcome back!</h3>
-              <form method="post" action=".">
+              <form method="post" {% if next_p %} action=".?next={{ next_p }}" {% else %} action="." {% endif %}>
                 {% csrf_token %}
                 {{ formulaire.as_p }}
                 <input type="submit" name="submit" class="btn btn-lg btn-primary btn-block btn-login font-weight-bold mb-2" >

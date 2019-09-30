@@ -25,7 +25,7 @@ class BookForm(forms.ModelForm):
 	prix = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'prix ','class':'form-control'}))
 	version = forms.IntegerField( widget=forms.NumberInput(attrs={'placeholder':'version ','class':'form-control'}))
 	cover = forms.ImageField( widget=forms.ClearableFileInput(attrs={'class':'form-control-file'}))
-	livre = forms.FileField( widget=forms.ClearableFileInput(attrs={'class':'form-control-file'}))
+	livre = forms.FileField( widget=forms.ClearableFileInput(attrs={'class':'form-control-file', 'accept':'application/pdf'}))
 	class Meta:
 		model = Livre
 		fields = ("titre", "description", "maison", "categorie", 

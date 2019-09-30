@@ -21,7 +21,7 @@
 <!-- Elements Content -->
 <div class="row">
   {% for element in page_content %}
-    <div class="col-lg-3 col-md-3 col-sm-4 col-6 detail_element">
+    <div class="col-lg-3 col-md-3 col-sm-4 col-6 mb-2 detail_element">
       <div class="card h-100">
         <a href="{% url 'book' element.slug %}"><img id="img" class="card-img-top" src="{{ element.cover.url }}" alt="{{ element.titre }}" height="200px"></a>
         <div class="card-body">

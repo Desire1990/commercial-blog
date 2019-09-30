@@ -15,14 +15,14 @@
 
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item active" style="background-image: url('{{ slide1.cover.url }}')">
-          <div class="carousel-caption d-none d-md-block">
+          <div class="carousel-caption text-dark d-none d-md-block">
             <h3>{{ slide1.titre }}</h3>
             <p>{{ slide1.description|truncatewords:10 }}</p>
           </div>
         </div>
         {%  for slide in slides %}
           <div class="carousel-item" style="background-image: url('{{ slide.cover.url }}')">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption text-dark d-none d-md-block">
               <h3>{{ slide.titre }}</h3>
             <p>{{ slide1.description|truncatewords:10 }}</p>
             </div>
@@ -59,9 +59,13 @@
         </a>
       </li>
     {% endif %}
-    {% for page in pages.page_range %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ forloop.counter }}" >{{ forloop.counter }}</a>
+    {% for i in pages.page_range %}
+      {% if page == i %}
+        <li class="page-item active">
+      {% else %}
+        <li class="page-item">
+      {% endif %}
+        <a class="page-link" href="?page={{ i }}" >{{ forloop.counter }}</a>
       </li>
     {% endfor %}
     {% if page_content.has_next %}
