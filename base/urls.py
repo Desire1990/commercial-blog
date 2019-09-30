@@ -7,5 +7,5 @@ urlpatterns = [
     path( 'deconnexion/', views.deconnexion, name="deconnexion" ),
     path( '', views.index, name="index" ),
     path( 'contact', views.contact, name="contact" ),
-    path( 'apropos', views.apropos, name="about" ),
+    path( 'about', views.apropos, name="about" ),
 ]

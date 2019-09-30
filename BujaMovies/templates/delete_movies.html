@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %} {{ page_title }} {% endblock %}
+
+{% block content %}
+
+    <br>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'movies' %}">Movies' Home</a>
+        </li>
+        <li class="breadcrumb-item active">Delete movie</li>
+      </ol>
+
+<!-- row 1 -->
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-12 col-md-6 text-center col-sm-12">
+        <h2> Delete movie</h2><hr><br>
+    </div>
+    <div class="col"></div>
+</div>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-12 col-md-6 col-sm-12">
+      <!-- <h2> <u>Ajouter le nouveau film</u> </h2> -->
+      <div class="card-body">
+        <h3 class="card-title">{{ selected_movie.titre }} [{{ selected_movie.resolution }}]</h3>
+
+        <a href="#">
+          <img id="img"
+            class="card-img-top"
+            src="{{ selected_movie.cover.url }}"
+            alt="{{ selected_movie.titre }}"
+            height="300px" />
+          </a>
+
+        <p class="card-text my-3" style = "text-align: justify;">
+          You are going to delete
+          <i style="color: red">{{ selected_movie.titre }} </i>
+          movie, are you sure of it ?
+        </p>
+
+        <form action="" method="POST" class="mt-3">
+        
+          <div class="form-group">
+              {% csrf_token %}
+              <input type="submit" value="Yes, I comfirm" class="btn btn-outline-danger btn-block"/>
+              <a href="{% url 'movies' %}" class="btn btn-outline-primary mt-2 btn-block">Cancel</a>
+          </div>
+
+        </form>
+
+      </div>
+    
+      
+    </div>
+    <div class="col"></div>
+</div>
+
+{% endblock %}

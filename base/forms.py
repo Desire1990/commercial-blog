@@ -3,10 +3,10 @@ from .models import *
 from django.contrib.auth.models import User
 
 class ContactForm(forms.ModelForm):
-    name = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'full name ','class':'form-control'}), label='')
-    tel = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'phone number ','class':'form-control'}), label='')
-    email = forms.EmailField( widget = forms.TextInput( attrs = {'placeholder':'email adress ','class':'form-control','rows':3,'cols':40} ), label='')
-    message = forms.CharField( widget=forms.Textarea(attrs={'placeholder':'Language ','class':'form-control'}), label='')
+    name = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'Full name ','class':'form-control'}), label='')
+    tel = forms.CharField( widget=forms.TextInput(attrs={'placeholder':'Phone number ','class':'form-control'}), label='')
+    email = forms.EmailField( widget = forms.TextInput( attrs = {'placeholder':'Email adress ','class':'form-control','rows':3,'cols':40} ), label='')
+    message = forms.CharField( widget=forms.Textarea(attrs={'placeholder':'Tapez ici votre message . . . ','class':'form-control'}), label='')
     
     class Meta:
         model = Contact

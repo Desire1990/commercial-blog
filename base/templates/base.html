@@ -1,13 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
 
   <title>{% block title %}Library{% endblock %}</title>
 
@@ -57,7 +56,7 @@
                 {{ request.user.username }}
               </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                <a class="dropdown-item" href="{% url 'deconnexion' %}">Sign-Out</a>
+                <a class="dropdown-item" href="{% url 'deconnexion' %}"> Log-Out</a>
                   {% block upload %}
                   {% endblock upload %}
                 </div>
@@ -65,26 +64,19 @@
                 User
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                <a class="dropdown-item" href="{% url 'connexion' %}">Sign-In</a>
+                <a class="dropdown-item" href="{% url 'connexion' %}">Log-In</a>
                 <a class="dropdown-item" href="{% url 'inscription' %}">Register</a>
                 </div>
               {% endif %}
           </li>
         </ul>
       </div>
-    </div>
-  </nav>
- 
+    </nav>
 
-{% block header %} {% endblock %}
+    {% block header %} {% endblock %}
 
-  <div class="container">
-    {% block content %} {% endblock %}
-  </div>
-
-  <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      {% block content %} {% endblock %}
     </div>
   </footer>
 
@@ -102,22 +94,41 @@ $(document).ready(function(){
     var acheter = $('#acheter');
     var input_serie= $('#inputid');
 
-    acheter.show();
-    telecharger.hide();
-    valider.hide();
-    input_serie.hide();
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Your Website 2019
+        </p>
+      </div>
+      <!-- /.container -->
+    </footer>
 
-    acheter.mousedown(function(){
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+  <script>
+    $(document).ready(function() {
+      var telecharger = $("#telecharger");
+      var valider = $("#valider");
+      var acheter = $("#acheter");
+      var input_serie = $("#inputid");
+
+      acheter.show();
+      telecharger.hide();
+      valider.hide();
+      input_serie.hide();
+
+      acheter.mousedown(function() {
         acheter.hide();
         valider.show();
-        input_serie.show()
-    });
-    valider.mousedown(function(){
+        input_serie.show();
+      });
+      valider.mousedown(function() {
         valider.hide();
         input_serie.hide();
         telecharger.show();
+      });
     });
-});
-</script>
-
+  </script>
 </html>

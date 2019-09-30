@@ -17,22 +17,19 @@
 <div class="row">
     <div class="col"></div>
     <div class="col-12 col-md-6 text-center col-sm-12">
-        <h2> Upload movie </h2><hr><br>
+        <h2> Update movie</h2><hr><br>
     </div>
     <div class="col"></div>
 </div>
 <div class="row">
     <div class="col"></div>
     <div class="col-12 col-md-6 col-sm-12">
-      <!-- <h2> <u>Ajouter le nouveau film</u> </h2> -->
-      <i style="color: green"> {{ msg }}</i>
       <form action="" method="POST" enctype="multipart/form-data">
+        
           <div class="form-group">
               {% csrf_token %}
               {{ form.as_p }}
-              <input type="submit" value="Enregistrer" class="btn btn-outline-primary btn-block"/>
-              <a class="d-block text-center text-dark mt-2 medium" href="{% url 'connexion' %}">Sign In</a>
-            
+              <input type="submit" value="Modifier" class="btn btn-outline-primary btn-block"/>
           </div>
       </form>
     </div>

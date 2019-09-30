@@ -1,129 +1,180 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import *
 from .models import *
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from base.views import connexion
+
+# def movies_attrs( movies, page ):
+#     try:
+#         slide1 = movies[0]
+#         slides = movies[1:3]
+#     except IndexError:
+#         slide1 = None
+#         slides = None
+#     pages = Paginator( movies, 10, orphans = 8 )
+#     page_content = pages.page( page )
+#     pagination = pages.page_range
+#     nom_app = "Movies\' Home"
+#     return (nom_app, slide1, slides, pages, page_content, pagination)
+    
 
 
-def inscription_view(request):
-    inscription = "S'inscrire"
-    form_view_inscr = InscriptionForm(request.POST or None)
-    if request.method == "POST":
-        if form_view_inscr.is_valid():
-            pseudo = form_view_inscr.cleaned_data['pseudo']
-            mail = form_view_inscr.cleaned_data['email']
-            pass1 = form_view_inscr.cleaned_data['password1']
-            pass2 = form_view_inscr.cleaned_data['password2']
-            if pass1 == pass2:
-                User.objects.create_user(username = pseudo, email = mail, password = pass1)
-                print("Votre compte a été créé aveec success!")
-            else:
-                print("Les mots de pass ne sont pas identiques!")
+def acceuil_app( request ):
+    nom_app = "Movies"
+    page_title = "Movies" 
+    accueil    = True
+    film_obj = Film.objects.all().order_by('date')
+    slide1=film_obj[0]
+    # film_obj=film_obj[1:3]
+    page = request.GET.get( 'page', 1 )           # page à charger par defaut
+    paginator = Paginator( film_obj, 24 )         # limiter tous les elements à afficher
 
-    return render(request, 'inscription.html', locals() )
-
-def connexion_view(request):
-    cone = "Se conncter"
-
-    form_view_con = ConnexionForm(request.POST or None)
-    if request.method == "POST":
-        if form_view_con.is_valid():
-            pseudo = form_view_con.cleaned_data['pseudo']
-            pass1 = form_view_con.cleaned_data['password1']
-            user = authenticate(username = pseudo, password = pass1)
-
-            if user:
-                login(request, user)
-                print("Vous etes connecté!")
-                return redirect(acceuil_app)
-            else:
-                connexion_msg = "Pseudo ou Mot de pass est incorrect !"
-
-    else:
-        form = ConnexionForm()
-
-    return render(request, 'connection.html', locals() )
-
-def deconnexion_view(request):
-    logout(request)
-    return redirect(acceuil_app)
-
-def movies_attrs(movies, page):
     try:
-        slide1 = movies[0]
-        slides = movies[1:3]
-    except IndexError:
-        slide1 = None
-        slides = None
-    pages = Paginator(movies, 20, orphans=8)
-    page_content = pages.page(page)
-    pagination = pages.page_range
-    nom_app = "Films"
-    return (nom_app, slide1, slides, pages, page_content, pagination)
+        filmsPage = paginator.page( page )
+    except PageNotAnInteger:
+        filmsPage = paginator.page( 1 )
+    except EmptyPage:
+        filmsPage = paginator.page( paginator.num_pages )
 
+    return render( request, 'movies_content.html', locals() )
 
-def acceuil_app(request):
-    accueil = True
-    movies = Film.objects.all().order_by('date')
-    nom_app, slide1, slides, pages, page_content, pagination = movies_attrs(movies, 1)
-    return render(request, 'movies_content.html', locals() )
+def details_app( request, slug ):
+    page_title = "Movie details" 
+    page_content = Film.objects.get( slug = slug )
+    comm_obj = Commentaires.objects.filter(titre = page_content)
+    associated_movies = Film.objects.filter( acteur = page_content.acteur ).order_by('date')
+    check_thumbs    = Avis.objects.filter( slug_key = slug )
+    associated_movies = associated_movies[0:3]
+    all_likes = Avis.objects.filter(Q( likes = True ) & Q( slug_key = slug )).count()
+    all_dislikes = Avis.objects.filter(Q( dislikes = True ) & Q( slug_key = slug )).count()
 
+    page = request.GET.get( 'page', 1 )           # page à charger par defaut
+    paginator = Paginator( comm_obj, 24 )         # limiter tous les elements à afficher
 
-def apropos_app(request):
-    return render(request, 'about.html', locals() )
+    try:
+        filmsPage = paginator.page( page )
+    except PageNotAnInteger:
+        filmsPage = paginator.page( 1 )
+    except EmptyPage:
+        filmsPage = paginator.page( paginator.num_pages )
 
-def details_app(request,slug):
-    film_obj = Films.objects.get( slug = slug )
-    comm_obj = Commentaires.objects.filter( titre = film_obj )
-    all_likes = Avis.objects.filter(Q(likes=True)).count()
-    all_dislikes = Avis.objects.filter(Q(dislikes=True)).count()
-
-    form_view_comm = CommentaireForm(request.POST or None)
+    # Dealing with the coments form
+    form_view_comm = CommentaireForm( request.POST or None )
     if request.method == "POST":
         if form_view_comm.is_valid():
             current_user = request.user
             # titr = form_view_comm.cleaned_data['titre']
             com = form_view_comm.cleaned_data['commentaire']
-            Commentaires(user = current_user,titre = film_obj,commentaire = com).save()
-            msg = "Enregistrer avec success !!!"
-            form_view_comm = Commentaires()
+            Commentaires( user = current_user, titre = page_content, commentaire = com ).save()
+            
+            all_likes    = Avis.objects.filter(Q( likes = True ) & Q( slug_key = slug ) ).count()
+            all_dislikes = Avis.objects.filter(Q( dislikes = True ) & Q( slug_key = slug )).count()
+        
+    # Dealing with the likes form
+    form_view_avi = LikeForm( request.POST or None )
 
-    form_view_avi = LikeForm(request.POST or None)
-    current_user = request.user
-    film_key = str(current_user)+str(slug)
+    if request.user.is_authenticated:
+        current_user = request.user
+        current_email = request.user.email
+    else:
+        current_user = request.user
+
     if request.method == "POST":
         if form_view_avi.is_valid():
-            like = form_view_avi.cleaned_data['likes']
-            dislike = form_view_avi.cleaned_data['dislikes']
-            Avis( user = current_user, slug_key = film_key, likes = like, dislikes = dislike ).save()
-            all_likes = Avis.objects.filter(Q(likes=True) & Q(slug_key=film_obj)).count()
-            all_dislikes = Avis.objects.filter(Q(dislikes=True) & Q(slug_key=film_obj)).count()
+            like         = form_view_avi.cleaned_data['likes']
+            dislike      = form_view_avi.cleaned_data['dislikes']
+            Avis( user = current_user,u_email = current_email, slug_key = slug, likes = like, dislikes = dislike ).save()
+            all_likes    = Avis.objects.filter(  Q( likes = True ) & Q( slug_key = slug ) ).count()
+            all_dislikes = Avis.objects.filter(Q(dislikes=True) & Q(slug_key=slug)).count()
+            
+    form_view_avi = LikeForm()
+    form_view_comm = CommentaireForm()
+    return render( request, 'movies_detail.html', locals() )
 
-    return render(request, 'detail.html', locals() )
-
-def contact_app(request):
-    return render(request, 'contact.html', locals() )
-
-def ajout_app(request):
-    form = FilmForm(request.POST or None, request.FILES)
+def ajout_app( request ):
+    page_title  = "Add movie" 
+    all_films   = Film.objects.all().order_by('date')
+    form        = FilmForm( request.POST or None, request.FILES )
     if request.method == "POST":
         if form.is_valid():
-            # form.save()
-            currentuser = request.user
-            titre = form.cleaned_data['titre']
-            acteur = form.cleaned_data['acteur']
-            description = form.cleaned_data['description']
-            language = form.cleaned_data['language']
-            resolution = form.cleaned_data['resolution']
-            cover = form.cleaned_data['cover']
-            film = form.cleaned_data['film']
-            prix = form.cleaned_data['prix_telechargement']
+            # form_view_film.save()
+            currentuser      = request.user
+            titre            = form.cleaned_data['titre']
+            acteur           = form.cleaned_data['acteur']
+            description      = form.cleaned_data['description']
+            language         = form.cleaned_data['language']
+            resolution       = form.cleaned_data['resolution']
+            cover            = form.cleaned_data['cover']
+            film             = form.cleaned_data['film']
+            prix             = form.cleaned_data['prix']
+            studio           = form.cleaned_data['studio']
+            realisateur      = form.cleaned_data['realisateur']
 
-            Films(user = currentuser,titre = titre,acteur = acteur,description = description,language = language,resolution = resolution,cover = cover,film = film,prix_telechargement = prix ).save()
-            nombre_film = Films.objects.all().count()
-            msg = "Enregistrer avec success !!!"
-    return render(request, 'movies_form.html', locals())
+            Film(user = currentuser,titre = titre,acteur = acteur,description = description,language = language,resolution = resolution,cover = cover,film = film,prix = prix,realisateur = realisateur,studio = studio ).save()
+            nombre_film = Film.objects.all().count()
+            
+            msg = "Saved"
+        form = FilmForm()
+        return redirect( acceuil_app )
+    return render( request, 'movies_form.html', locals() )
+    
+def update_app( request, id ):
+    selected_movie = get_object_or_404( Film, pk = id)
+    
+    if not request.user.is_authenticated:
+        return redirect( connexion )
+
+    elif selected_movie.user != request.user:
+        return redirect( acceuil_app )
+
+    else:
+        page_title = "Update movie" 
+        
+        if request.method == 'POST':
+            form = FilmForm( request.POST or None, request.FILES or None, instance = selected_movie )
+            if form.is_valid():
+                form.save()
+                return redirect( acceuil_app )
+                
+        else:
+            data = {'id'            : selected_movie.id,
+                    'user'          : selected_movie.user,
+                    'slug'          : selected_movie.slug,
+                    'titre'         : selected_movie.titre,
+                    'acteur'        : selected_movie.acteur,
+                    'description'   : selected_movie.description,
+                    'language'      : selected_movie.language,
+                    'resolution'    : selected_movie.resolution,
+                    'studio'        : selected_movie.studio,
+                    'prix'          : selected_movie.prix,
+                    'realisateur'   : selected_movie.realisateur,
+                    'date'          : selected_movie.date,
+                    'cover'         : selected_movie.cover.url,
+                    'film'          : selected_movie.film.url,
+                    }
+
+            form = FilmForm( initial = data )
+
+    return render( request, 'update_movies_form.html', locals() )
+
+def delete_app( request, slug ):
+    selected_movie = get_object_or_404( Film, slug = slug )
+    get_user = User.objects.all()
+    if not request.user.is_authenticated:
+        return redirect( connexion )
+    
+    elif selected_movie.user != request.user:
+        return redirect( connexion )
+
+    else:
+        page_title     = "Delete movie" 
+        if request.method == "POST":
+            selected_movie.delete()
+            return redirect('../../movies')
+        
+    return render( request, 'delete_movies.html', locals() )

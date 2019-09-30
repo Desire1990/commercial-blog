@@ -34,7 +34,7 @@ def connexion(request):
 		username = formulaire.cleaned_data['username']
 		password = formulaire.cleaned_data['password']
 		print(username, password)
-		user = authenticate(username=username, password=password)
+		user = authenticate(username = username, password = password)
 		if user:  # Si l'objet renvoyé n'est pas None
 			login(request, user)
 			return redirect(index)
@@ -60,7 +60,8 @@ def contact(request):
 	if request.method == "POST":
 		if form.is_valid():
 			form.save()
+	form = ContactForm()
 	return render(request, "contact.html", locals())
 
 def apropos(request):
-	return HttpResponse("<h1>apropos</h1>")
+	return render(request, "about.html", locals())
