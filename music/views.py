@@ -21,7 +21,7 @@ def music_attrs(elements, page):
     nom_app = "Musiques"
     return (nom_app, slide1, slides, pages, page_content)
 
-@login_required(redirect_field_name='/connexion/')
+@login_required(login_url='/connexion/')
 def delete_music_view(request, slug):
     umuziki = Music.objects.get(slug=slug)
     if request.user == umuziki.owner.user:
