@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'BujaMovies',
     'music',
     'base',
-    'django_cleanup',
+    # 'django_cleanup',
 ]
 
 MIDDLEWARE = [
