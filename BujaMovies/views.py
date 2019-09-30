@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .forms import *
 from .models import *
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -116,7 +117,8 @@ def ajout_app( request ):
         form = FilmForm()
         return redirect( acceuil_app )
     return render( request, 'movies_form.html', locals() )
-    
+
+@login_required   
 def update_app( request, id ):
     selected_movie = get_object_or_404( Film, pk = id)
     
