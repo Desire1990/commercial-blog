@@ -16,30 +16,24 @@ REGISTERED USERS CAN:
 -	Edit their own books , movies and music
 -	Delete their own books , movies and music
 
-
-
- 
 PAGE D’ACCUEIL
 
 I.	MENU 
 
 -	LOGIN ( IF UNREGISTERED USER )
 -	REGISTER ( IF UNREGISTERED USER )
-
 -	ADD 
-	MOVIES
-	 MUSIC
-	BOOKS
-
+  	MOVIES
+  	 MUSIC
+  	BOOKS
 -	BROWSE
-	MOVIES
-	 MUSIC
-	BOOKS
-
+  	MOVIES
+  	 MUSIC
+  	BOOKS
 -	NAME USER ( IF REGISTERED USER)
-	LOG OUT
-	PROFILE
-
+  	LOG OUT
+  	PROFILE
+  
 II.	SLIDERS
 
 III.	MOVIES
@@ -48,12 +42,12 @@ III.	MOVIES
 -	Title
 -	Button download ( if registered user)
 -	Button see more
-	Can play Video
-	Can See all details
+  	Can play Video
+  	Can See all details
 
 -	Button see all movies
-	Display all movies
-	Make pagination if more than 6 movies
+  	Display all movies
+  	Make pagination if more than 6 movies
 
 IV.	MUSIC 
 3 COLUMNS OF MUSIC / LINE
@@ -61,12 +55,12 @@ IV.	MUSIC
 -	Title
 -	Button download ( if registered user)
 -	Button see more
-	Can play the music
-	Can See all details
+  	Can play the music
+  	Can See all details
 
 -	Button see all music
-	Display all music
-	Make pagination if more than 6 music
+  	Display all music
+  	Make pagination if more than 6 music
 
 
 V.	BOOKS
@@ -75,11 +69,11 @@ V.	BOOKS
 -	Title
 -	Button download ( if registered user)
 -	Button see more
-	Can see the book
-	Can See all details
+  	Can see the book
+  	Can See all details
 
 -	Button see all books
-	display all books
-	Make pagination if more than 6 books
+  	display all books
+  	Make pagination if more than 6 books
 
 VI.	Footer 
