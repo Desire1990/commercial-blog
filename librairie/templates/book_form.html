@@ -14,7 +14,7 @@
           </div>
           <div class="card-body">
             <h5 class="card-title text-center">{{ page }}</h5>
-            <form method="post" enctype="multipart/form-data" action="{% url url slug %}">
+            <form method="post" enctype="multipart/form-data" action=".">
               {% csrf_token %}
               {{ form.as_p }}
               <input class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="{{ page }}" name="{{ page }}" />
