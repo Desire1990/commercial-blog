@@ -78,21 +78,6 @@
     <div class="container">
       {% block content %} {% endblock %}
     </div>
-  </footer>
-
-  <!-- Bootstrap core JavaScript -->
-  <script src="{% static 'jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
-</body>
-<script>
-
-$(document).ready(function(){
-
-    var telecharger = $('#telecharger');
-    var valider = $('#valider');
-    var acheter = $('#acheter');
-    var input_serie= $('#inputid');
 
     <footer class="py-5 bg-dark">
       <div class="container">
@@ -103,32 +88,33 @@ $(document).ready(function(){
       <!-- /.container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  </body>
-  <script>
-    $(document).ready(function() {
-      var telecharger = $("#telecharger");
-      var valider = $("#valider");
-      var acheter = $("#acheter");
-      var input_serie = $("#inputid");
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-      acheter.show();
-      telecharger.hide();
+</body>
+<script>
+  $(document).ready(function() {
+    var telecharger = $("#telecharger");
+    var valider = $("#valider");
+    var acheter = $("#acheter");
+    var input_serie = $("#inputid");
+
+    acheter.show();
+    telecharger.hide();
+    valider.hide();
+    input_serie.hide();
+
+    acheter.mousedown(function() {
+      acheter.hide();
+      valider.show();
+      input_serie.show();
+    });
+    valider.mousedown(function() {
       valider.hide();
       input_serie.hide();
-
-      acheter.mousedown(function() {
-        acheter.hide();
-        valider.show();
-        input_serie.show();
-      });
-      valider.mousedown(function() {
-        valider.hide();
-        input_serie.hide();
-        telecharger.show();
-      });
+      telecharger.show();
     });
-  </script>
+  });
+</script>
 </html>

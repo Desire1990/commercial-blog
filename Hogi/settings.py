@@ -131,7 +131,7 @@ LOGIN_URL = "/connexion/"
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'Movies')
 # Maze iyo ni path jewe nakoresheje mugu stocka ama cover nama trailer,but nayishize muri comment kugira mbanze pime ndabe ko bikora
 # sans problem, en plus iyi ndabe ko na commit yikintu kije muri comment ko igi suporta
