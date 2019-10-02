@@ -1,6 +1,6 @@
 This is a django project that helps us test the ability of each new hogi member. 
 So each new member has to create an application to get approved. 
-The applications are, Movies, Music, Library.
+Current applications are, Movies, Music, Library.
 
 UNREGISTERED USERS CAN:
 -	Browse books, movies and music
