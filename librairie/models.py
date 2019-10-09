@@ -85,8 +85,7 @@ class Livre(models.Model):
     def save(self, *args, **kwargs):
         self.thumbnail.name = "librairie/livres/"+self.thumbName()
         super(Livre, self).save(*args, **kwargs)
-        print("===== thumb =====", self.thumbnail.url)
-        self.generateThumbPdf()
+        #self.generateThumbPdf()
 
     def generateThumbPdf(self):
         thumb_dir = os.path.dirname(self.livre.path)
