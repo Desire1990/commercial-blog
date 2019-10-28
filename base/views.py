@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from BujaMovies.models import Film
 from librairie.models import Livre
 from music.models import Music
+from stores.models import Post
 from .forms import *
 
 def inscription(request):
@@ -59,6 +60,7 @@ def index(request):
 	slide1 = Music.objects.last()
 	slide2 = Film.objects.last()
 	slide3 = Livre.objects.last()
+	slide4 = Post.objects.all()
 	return render(request, 'index.html', locals())
 
 def contact(request):

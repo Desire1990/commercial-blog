@@ -24,4 +24,7 @@ urlpatterns = [
     path('movies/', include('BujaMovies.urls'), name="movies"),
     path('', include('base.urls')),
     path('music/', include('music.urls'), name="music"),
+
+    path('stores/', include('stores.urls'),  name='stores'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %} {{ inscription }} {% endblock %}
+
+{% block content %}
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+             <!-- Background image for card set in CSS! -->
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-center">Post Upload form</h5>
+            <form method="post" action="." class="form-signin" enctype="multipart/form-data" >
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Upload</button>
+              {% if user.is_authenticated %}
+                <a class="d-block text-center mt-2 small" href="{% url 'deconnexion' %}">Sign Out</a>
+              {% else %}
+                <a class="d-block text-center mt-2 small" href="{% url 'connexion' %}">Sign In</a>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}

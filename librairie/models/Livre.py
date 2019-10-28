@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from PyPDF2 import PdfFileReader, PdfFileWriter
+#from PyPDF2 import PdfFileReader, PdfFileWriter
 import os
     
 class Livre(models.Model):
@@ -13,7 +13,7 @@ class Livre(models.Model):
     annee = models.DateField(default=timezone.now)
     contributeurs = models.ManyToManyField("base.Profil", through='Contribution')
     prix = models.IntegerField(verbose_name="prix")
-    livre = models.FileField(upload_to="librairie/livres")
+    livre = models.FileField(upload_to="librairie/livres", default = 0)
     thumbnail = models.FileField(null=True, upload_to="librairie/livres")  
     version = models.IntegerField(verbose_name="version du livre")
     slug = models.SlugField(unique=True, max_length=30)

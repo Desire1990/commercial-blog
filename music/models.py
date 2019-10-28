@@ -17,7 +17,7 @@ class Music(models.Model):
 	cover = models.ImageField(upload_to="music/covers/")
 	titre = models.TextField(max_length=1000)
 	owner = models.ForeignKey("base.Profil", null=True, related_name='owner', on_delete=models.SET_NULL)
-	composers = models.ManyToManyField("base.Profil", null=True, through='Composition')
+	composers = models.ManyToManyField("base.Profil", through='Composition')
 	description = models.TextField(verbose_name="a propos de la musique")
 	slug = models.SlugField(max_length=1000)
 	price = models.IntegerField()

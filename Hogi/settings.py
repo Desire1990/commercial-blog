@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'BujaMovies',
     'music',
     'base',
+
+    'stores'
     # 'django_cleanup',
 ]
 
@@ -64,6 +66,8 @@ TEMPLATES = [
             os.path.join(BASE_DIR, os.path.join('music', 'templates')),
             os.path.join(BASE_DIR, os.path.join('BujaMovies', 'templates')),
             os.path.join(BASE_DIR, os.path.join('librairie', 'templates')),
+
+            os.path.join(BASE_DIR, os.path.join('stores', 'templates')),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
