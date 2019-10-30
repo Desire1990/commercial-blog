@@ -18,7 +18,7 @@ def article_attrs( post_obj, page ):
     pagination   = pages.page_range
     nom_app      = "stores"
     return (nom_app, slide1, slides, pages, page_content)
-@login_required   
+   
 def accueil( request ):
     mdel = Post
     nom_app    = "Articles"
