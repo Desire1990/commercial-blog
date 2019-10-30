@@ -34,7 +34,7 @@ def accueil( request ):
 
 
 
-@login_required
+
 def post_view(request, pk, template_name='stores/postdetail.html'):
     post= get_object_or_404(Post, pk=pk) 
     #post = Post.objects.all()   
